@@ -21,8 +21,8 @@ class TextUserDisplay implements UserDisplay {
      * @param grid the grid to display
      */
     public void display(Cell[][] grid) {
-        for(int column=0;column<grid.length;column++) {
-            for(int row=0;row<grid[column].length;row++) {
+        for(int row=0;row<grid.length;row++) {
+            for(int column=0;column<grid[row].length;column++) {
                 char cellSymbol;
                 Cell cell = grid[column][row];
                 
