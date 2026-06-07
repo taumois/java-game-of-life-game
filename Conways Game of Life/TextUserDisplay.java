@@ -2,7 +2,7 @@
 /**
  * TextUserDisplay here.
  *
- * @author Isaiah Taumoepea
+ * @author Isaiah Taumoepeau
  */
 class TextUserDisplay implements UserDisplay {
     private static final char ALIVE_CELL_SYMBOL = 'W';
@@ -24,8 +24,8 @@ class TextUserDisplay implements UserDisplay {
         for(int row=0;row<grid.length;row++) {
             for(int column=0;column<grid[row].length;column++) {
                 char cellSymbol;
-                Cell cell = grid[column][row];
                 
+                Cell cell = grid[row][column];
                 cellSymbol = symbolFromCell(cell);
                 
                 System.out.print(cellSymbol);

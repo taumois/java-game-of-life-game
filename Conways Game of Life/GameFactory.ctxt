@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=GameFactory
+comment0.text=\r\n\ GameFactory\ here.\r\n\r\n\ @author\ Isaiah\ Taumoepeau\r\n
+comment1.params=
+comment1.target=ConwaysGameOfLife\ egGame()
+comment1.text=\r\n\ Constructs\ an\ example\ object\ of\ ConwaysGameOfLife\r\n\r\n\ @return\ the\ object\r\n
+numComments=2

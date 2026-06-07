@@ -1,7 +1,0 @@
-#BlueJ class context
-comment0.target=UI
-comment0.text=\r\n\ User\ Interface.\r\n\r\n\ @author\ Isaiah\ Taumoepeau\r\n
-comment1.params=display\ input
-comment1.target=UI(UserDisplay,\ UserInput)
-comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ UI\r\n
-numComments=2

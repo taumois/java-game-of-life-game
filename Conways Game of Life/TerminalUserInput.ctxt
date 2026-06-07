@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=TerminalUserInput
+comment0.text=\r\n\ TerminalUserInput\ here.\r\n\r\n\ @author\ Isaiah\ Taumoepeau\r\n
+comment1.params=
+comment1.target=TerminalUserInput()
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ TerminalUserInput\r\n
+comment2.params=
+comment2.target=int\ userAction()
+comment2.text=\r\n\ ...\r\n\r\n\ @return\ all\ the\ action\r\n
+numComments=3

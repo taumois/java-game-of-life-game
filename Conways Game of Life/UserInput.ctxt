@@ -1,4 +1,7 @@
 #BlueJ class context
 comment0.target=UserInput
 comment0.text=\r\n\ UserInput\ here.\r\n\r\n\ @author\ Isaiah\ Taumoepeau\r\n
-numComments=1
+comment1.params=
+comment1.target=int\ userAction()
+comment1.text=\r\n\ Returns\ the\ users\ Action\r\n\r\n\ @return\ the\ action\r\n
+numComments=2

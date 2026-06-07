@@ -20,10 +20,21 @@ class GameGrid {
     GameGrid(int width, int height) {
         this.WIDTH = width;
         this.HEIGHT = height;
+        
         CELLS = new Cell[HEIGHT][WIDTH];
-        for(int i=0;i<CELLS.length;i++) {
-            CELLS[i][i] = Cell.DEAD;
+        for(int row=0;row<CELLS.length;row++) {
+            for(int column=0;column<CELLS[row].length;column++) {
+                CELLS[row][column] = Cell.ALIVE;
+            }
         }
+    }
+    
+    int width() {
+        return this.WIDTH;
+    }
+    
+    int height() {
+        return this.HEIGHT;
     }
     
     /**
@@ -42,8 +53,8 @@ class GameGrid {
      * @param cellY y-coordinate of the target cell
      * @return      the cell
      */
-    Cell cell(int cellX, int cellY) {
-        Cell cell = CELLS[cellY][cellX];
+    Cell cell(int column, int row) {
+        Cell cell = CELLS[row][column];
         return cell;
     }
     
@@ -54,8 +65,8 @@ class GameGrid {
      * @param cellY y-coordinate of the target cell
      * @param state state to change the cell to
      */
-    void setCellsState(int cellX, int cellY, Cell state) {
-        CELLS[cellX][cellY] = state;
+    void setCellsState(int column, int row, Cell state) {
+        CELLS[row][column] = state;
     }
     
     /**
@@ -71,7 +82,7 @@ class GameGrid {
         for(int xOffset=-1;xOffset<=1;xOffset++) {
             for(int yOffset=-1;yOffset<=1;yOffset++) {
                 boolean cellIsNeighbor = (xOffset != 0 || yOffset != 0);
-                boolean cellIsAlive = cell(cellX+xOffset, cellY+yOffset) == Cell.ALIVE;
+                boolean cellIsAlive = (cell(cellX+xOffset, cellY+yOffset) == Cell.ALIVE);
                 
                 neighbors += (!cellIsNeighbor && cellIsAlive) ? 1 : 0;
             }
