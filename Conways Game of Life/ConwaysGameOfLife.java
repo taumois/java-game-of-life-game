@@ -26,7 +26,7 @@ public class ConwaysGameOfLife {
         for(int row=0;row<height;row++) {
             for(int column=0;column<width;column++) {
                int no = GRID.cellsNumberOfLivingNeighbors(column, row);
-               GRID.setCellsState(column, row, GRID.cell(column, row) == Cell.ALIVE ? Cell.DEAD : Cell.ALIVE);
+               GRID.setCellsState(column, row, (GRID.cell(column, row) == Cell.ALIVE ? Cell.DEAD : Cell.ALIVE));
             }
         }
     }
