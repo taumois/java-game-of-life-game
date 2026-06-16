@@ -16,8 +16,8 @@ public class ConwaysGameOfLife {
     }
     
     void display() {
-        UI.updateDisplay(GRID.cells());
         foo();
+        UI.updateDisplay(GRID.cells());
     }
     
     private void foo() {
@@ -47,9 +47,12 @@ public class ConwaysGameOfLife {
         }
         
         boolean willUnderpopulate = numberOfLivingNeighbors > MINIMUM_LIVE_NEIGHBORS_FOR_SURVIVAL;
+        if(willUnderpopulate) { 
+            return Cell.DEAD; 
+        }
         boolean willOverpopulate = numberOfLivingNeighbors < MAXIMUM_LIVE_NEIGHBORS_FOR_SURVIVAL;
-        if(willUnderpopulate || willOverpopulate) {
-            return Cell.DEAD;
+        if(willOverpopulate) { 
+            return Cell.DEAD; 
         }
         return Cell.ALIVE;
     }

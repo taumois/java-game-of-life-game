@@ -5,6 +5,7 @@
 class TextUserDisplay implements UserDisplay {
     private static final char ALIVE_CELL_SYMBOL = 'W';
     private static final char DEAD_CELL_SYMBOL = '`';
+    static char[] a;
     
     /**
      * Constructor for objects of class TextUserDisplay
@@ -19,6 +20,8 @@ class TextUserDisplay implements UserDisplay {
      * @param grid the grid to display
      */
     public void display(Cell[][] grid) {
+        char[] symbolBuffer = new char[grid.length * (grid[0].length + 1)];
+        
         for(int row=0;row<grid.length;row++) {
             for(int column=0;column<grid[row].length;column++) {
                 char cellSymbol;
@@ -26,10 +29,15 @@ class TextUserDisplay implements UserDisplay {
                 Cell cell = grid[row][column];
                 cellSymbol = symbolFromCell(cell);
                 
-                System.out.print(cellSymbol);
+                symbolBuffer[row * grid[row].length + column] = cellSymbol;
+                System.out.print(row * grid[row].length + column+"|"+cellSymbol);
             }
-            System.out.println();
+            symbolBuffer[row * grid[row].length + grid[row].length] = '\n';
+            System.out.println(/*row * grid[row].length + grid[row].length+"|"*/);
         }
+        
+        a = symbolBuffer;
+        System.out.println(symbolBuffer);
     }
     
     /**
