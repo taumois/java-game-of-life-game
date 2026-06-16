@@ -67,8 +67,8 @@ class GameGrid {
      * 
      * @see 
      */
-    void setCellsState(int column, int row, Cell state) {
-        CELLS[row][column] = state;
+    void setCellsState(int cellsColumn, int cellsRow, Cell state) {
+        CELLS[cellsRow][cellsColumn] = state;
     }
     
     void setCellStates(Cell[][] states) {
@@ -86,20 +86,20 @@ class GameGrid {
      * @param  cellY y-coordinate of the target cell
      * @return the neighbors
      */
-    int cellsNumberOfLivingNeighbors(int column, int row) {
+    int cellsNumberOfLivingNeighbors(int cellsColumn, int cellsRow) {
         int neighbors = 0;
         
         for(int rowOffset=-1;rowOffset<=1;rowOffset++) {
             for(int columnOffset=-1;columnOffset<=1;columnOffset++) {
                 boolean isNeighbor;
-                isNeighbor = OffsetCellIsCellNeighbor(column, row, columnOffset, rowOffset);
+                isNeighbor = OffsetCellIsLivingNeighbor(cellsColumn, cellsRow, columnOffset, rowOffset);
                 neighbors += isNeighbor ? 1 : 0;
             }
         }
         return neighbors;
     }
     
-    boolean OffsetCellIsCellNeighbor(int column, int row, int columnOffset, int rowOffset) {
+    private boolean OffsetCellIsLivingNeighbor(int cellsColumn, int cellsRow, int columnOffset, int rowOffset) {
         Cell cell;
         boolean cellIsNotNeighbor;
         boolean cellIsDead;
@@ -107,8 +107,8 @@ class GameGrid {
         int targetRow;
         boolean coordinateIsInvalid;
         
-        targetColumn = column + columnOffset;
-        targetRow = row + rowOffset;
+        targetColumn = cellsColumn + columnOffset;
+        targetRow = cellsRow + rowOffset;
         coordinateIsInvalid = (!hasColumn(targetColumn) || !hasRow(targetRow));
         if(coordinateIsInvalid) {
             return false;
@@ -127,14 +127,14 @@ class GameGrid {
         return true;
     }
     
-    boolean hasColumn(int column) {
+    private boolean hasColumn(int column) {
         if((column < WIDTH) && (column >= 0)) {
             return true;
         }
         return false;
     }
     
-    boolean hasRow(int row) {
+    private boolean hasRow(int row) {
         if((row < HEIGHT) && (row >= 0)) {
             return true;
         }

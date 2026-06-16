@@ -20,7 +20,7 @@ public class ConwaysGameOfLife {
         foo();
     }
     
-    void foo() {
+    private void foo() {
         int width = GRID.width();
         int height = GRID.height();
         Cell[][] cellStatesBuffer = new Cell[GRID.width()][GRID.height()];
@@ -38,7 +38,7 @@ public class ConwaysGameOfLife {
         GRID.setCellStates(cellStatesBuffer);
     }
     
-    Cell cellStateFromNumberOfLivingNeighbors(Cell state, int numberOfLivingNeighbors) {
+    private Cell cellStateFromNumberOfLivingNeighbors(Cell state, int numberOfLivingNeighbors) {
         if(state == Cell.DEAD) {
             if(numberOfLivingNeighbors == LIVE_NEIGHBORS_FOR_REPRODUCTION) {
                 return Cell.ALIVE;
