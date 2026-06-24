@@ -7,6 +7,8 @@ class TerminalGameUserDisplay implements GameUserDisplay {
     private static final char ALIVE_CELL_SYMBOL = 'W';
     private static final char DEAD_CELL_SYMBOL = '`';
     
+    private char[] printedContent;
+    
     /**
      * Constructor for objects of class TextUserDisplay
      */
@@ -22,7 +24,12 @@ class TerminalGameUserDisplay implements GameUserDisplay {
     public void updateGrid(Cell[][] grid) {
         char[] displayBuffer = printableBufferFromGrid(grid);
         clearTerminal();
-        System.out.print(displayBuffer);
+        recordAndPrint(displayBuffer);
+    }
+    
+    public void recordAndPrint(char[] content) {
+        System.out.print(content);
+        printedContent = content;
     }
     
     /**

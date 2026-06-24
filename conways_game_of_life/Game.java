@@ -16,7 +16,7 @@ public class Game {
     }
     
     static Game terminalUIGame() {
-        return new Game(GameUI.terminalGameUI(), new GameGrid(40,80));
+        return new Game(GameUI.terminalGameUI(), new GameGrid(40,60));
     }
     
     void play() {
@@ -29,6 +29,7 @@ public class Game {
     private void step() {
         foo();
         UI.updateDisplay(GRID.cells());
+        UI.askUserForAction("Hello World!");
     }
     
     private void foo() {
