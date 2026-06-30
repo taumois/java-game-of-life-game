@@ -2,7 +2,7 @@
 import java.util.Random;
 
 /**
- * Objects of GameGrid holds the state of every cell for a game of Conway's Game of Life.
+ * Objects of GameGrid holds the state of every cell for a Game of Life.
  */
 class GameGrid {
     private static final byte NEIGHBORS_PER_CELL = 8;
@@ -38,9 +38,9 @@ class GameGrid {
     }
     
     /**
-     * Returns an array with the state of all cells
+     * Returns an array of every row, each containing all the cells in that row sorted by column
      *
-     * @return all the cells
+     * @return the 2d row, column array
      */
     Cell[][] cells() {
         return CELLS;
@@ -51,7 +51,7 @@ class GameGrid {
      *
      * @param cellX x-coordinate of the target cell
      * @param cellY y-coordinate of the target cell
-     * @return      the cell
+     * @return      the state
      */
     Cell cell(int column, int row) {
         Cell cell = CELLS[row][column];
@@ -72,11 +72,7 @@ class GameGrid {
     }
     
     void setCellStates(Cell[][] states) {
-        for(int row=0;row<CELLS.length;row++) {
-            for(int column=0;column<CELLS[row].length;column++) {
-                CELLS[row][column] = states[column][row];
-            }
-        }
+        CELLS = states;
     }
     
     /**

@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=GameGrid
-comment0.text=\r\n\ Objects\ of\ GameGrid\ holds\ the\ state\ of\ every\ cell\ for\ a\ game\ of\ Conway's\ Game\ of\ Life.\r\n
+comment0.text=\r\n\ Objects\ of\ GameGrid\ holds\ the\ state\ of\ every\ cell\ for\ a\ Game\ of\ Life.\r\n
 comment1.params=width\ height
 comment1.target=GameGrid(int,\ int)
 comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ GameGrid\r\n\ \r\n\ @param\ width\ \ width\ to\ make\ the\ grid\r\n\ @param\ height\ height\ to\ make\ the\ grid\r\n
@@ -14,10 +14,10 @@ comment3.params=
 comment3.target=int\ height()
 comment4.params=
 comment4.target=Cell[][]\ cells()
-comment4.text=\r\n\ Returns\ an\ array\ with\ the\ state\ of\ all\ cells\r\n\r\n\ @return\ all\ the\ cells\r\n
+comment4.text=\r\n\ Returns\ an\ array\ of\ every\ row,\ each\ containing\ all\ the\ cells\ in\ that\ row\ sorted\ by\ column\r\n\r\n\ @return\ the\ 2d\ row,\ column\ array\r\n
 comment5.params=column\ row
 comment5.target=Cell\ cell(int,\ int)
-comment5.text=\r\n\ Returns\ the\ state\ of\ a\ specified\ cell\r\n\r\n\ @param\ cellX\ x-coordinate\ of\ the\ target\ cell\r\n\ @param\ cellY\ y-coordinate\ of\ the\ target\ cell\r\n\ @return\ \ \ \ \ \ the\ cell\r\n
+comment5.text=\r\n\ Returns\ the\ state\ of\ a\ specified\ cell\r\n\r\n\ @param\ cellX\ x-coordinate\ of\ the\ target\ cell\r\n\ @param\ cellY\ y-coordinate\ of\ the\ target\ cell\r\n\ @return\ \ \ \ \ \ the\ state\r\n
 comment6.params=cellsColumn\ cellsRow\ state
 comment6.target=void\ setCellsState(int,\ int,\ Cell)
 comment6.text=\r\n\ Sets\ the\ state\ of\ a\ specified\ cell.\ Either\ alive\ or\ dead(i.e.\ true\ or\ false)\r\n\r\n\ @param\ cellX\ x-coordinate\ of\ the\ target\ cell\r\n\ @param\ cellY\ y-coordinate\ of\ the\ target\ cell\r\n\ @param\ state\ state\ to\ change\ the\ cell\ to\r\n\ \r\n\ @see\ \r\n
