@@ -1,6 +1,6 @@
 
 /**
- * ConwaysGameOfLife here.
+ * A Game of Life
  */
 public class Game {
     private static final int MINIMUM_LIVE_NEIGHBORS_FOR_SURVIVAL = 2;
@@ -15,8 +15,8 @@ public class Game {
         this.GRID = grid;
     }
     
-    static Game terminalUIGame() {
-        return new Game(GameUI.terminalGameUI(), new GameGrid(25,25));
+    static Game standardTerminalGame() {
+        return new Game(GameUI.terminalGameUI(), new StandardGameGrid(25,25));
     }
     
     void play() {
@@ -26,28 +26,26 @@ public class Game {
                 foo();
             }
             
-            // System.
             UI.updateDisplay(GRID.cells());
             UI.askUserForAction("Hello World!");
         }
     }
     
     private void foo() {
-        int width = GRID.width();
+        int width = GRID.cell();
         int height = GRID.height();
-        Cell[][] cellStatesBuffer = new Cell[GRID.width()][GRID.height()];
         
         for(int row=0;row<height;row++) {
             for(int column=0;column<width;column++) {
                 Cell cell = GRID.cell(column, row);
-                int cellsNumberOfLivingNeighbors = GRID.cellsNumberOfLivingNeighbors(column, row);
-                Cell cellsNextState = cellStateFromNumberOfLivingNeighbors(cell, cellsNumberOfLivingNeighbors);
+                int cellsNumberOfLivingNeighbors = GRID.neighborNumberOfCell(column, row);
+                Cell nextStateOfCell = cellStateFromNumberOfLivingNeighbors(cell, cellsNumberOfLivingNeighbors);
                 
-                cellStatesBuffer[column][row] = cellsNextState;
+                GRID.setBufferCell(column, row, nextStateOfCell);
             }
         }
         
-        GRID.setCellStates(cellStatesBuffer);
+        GRID.pushBuffer();
     }
     
     private Cell cellStateFromNumberOfLivingNeighbors(Cell state, int numberOfLivingNeighbors) {

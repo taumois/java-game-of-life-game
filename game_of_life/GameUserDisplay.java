@@ -5,16 +5,16 @@
 interface GameUserDisplay {
     
     /**
-     * Updates the displayed grid i.e. cells
+     * Updates the displayed grid with a new one
      *
-     * @param grid the grid to display
+     * @param grid the new grid
      */
     public void updateGrid(Cell[][] grid);
     
     /**
      * Displays a prompt for the user
      *
-     * @param prompt for the user
+     * @param the prompt
      */
     public void promptUserForAction(String prompt);
 }

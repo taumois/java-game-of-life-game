@@ -17,9 +17,9 @@ class TerminalGameUserDisplay implements GameUserDisplay {
     }
     
     /**
-     * Updates the displayed grid i.e. cells
+     * Updates the displayed grid with a new one
      *
-     * @param grid the grid to display
+     * @param grid the new grid
      */
     public void updateGrid(Cell[][] grid) {
         char[] displayBuffer = printableBufferFromGrid(grid);
@@ -35,7 +35,7 @@ class TerminalGameUserDisplay implements GameUserDisplay {
     /**
      * Displays a prompt for the user
      *
-     * @param prompt for the user
+     * @param the prompt
      */
     public void promptUserForAction(String prompt) {
         System.out.println("=========================");
