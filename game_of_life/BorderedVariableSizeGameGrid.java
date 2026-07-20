@@ -2,9 +2,9 @@
 import java.util.Random;
 
 /**
- * A finite bordered grid responsible for holding all the cells for a game of Life.
+ * A bordered grid responsible for holding all the cells for a game of Life.
  */
-class StandardGameGrid implements GameGrid {
+class BorderedVariableSizeGameGrid implements GameGrid {
     private static final byte NEIGHBORS_PER_CELL = 8;
     
     private final int COLUMN_QUANTITY;
@@ -18,9 +18,9 @@ class StandardGameGrid implements GameGrid {
      * @param width  width to make the grid
      * @param height height to make the grid
      */
-    StandardGameGrid(int columnQuantity, int rowQuantity) {
-        this.COLUMN_QUANTITY = columnQuantity;
-        this.ROW_QUANTITY = rowQuantity;
+    BorderedVariableSizeGameGrid(int width, int height) {
+        this.COLUMN_QUANTITY = width;
+        this.ROW_QUANTITY = height;
         
         cells = new Cell[ROW_QUANTITY][COLUMN_QUANTITY];
         for(int row=0;row<cells.length;row++) {
@@ -31,45 +31,27 @@ class StandardGameGrid implements GameGrid {
     }
     
     /**
-     * A complete 2d array of this object's cell's states. The 1st dimension is row #; the 2nd dimension is column #
+     * The 2d array containing all of the cells. The 1st dimension is row #; the 2nd dimension is column #
      * 
-     * @return the 2d array of states
+     * @return the cells
      */
     public Cell[][] cells() {
-        Cell[][] cells = new Cell[ROW_QUANTITY][COLUMN_QUANTITY];
-        for(int row=0;row<ROW_QUANTITY;row++) {
-            for(int column=0;column<COLUMN_QUANTITY;column++) {
-                cells[row][column] = this.cells[row][column];
-            }
-        }
         return cells;
     }
     
     /**
-     * The value of a specified cell
+     * Step forward a generation the specified amount of times
      * 
-     * @param column the column of the target cell
-     * @param row    the row of the target cell
+     * @param NumberOfGenerations
      */
-    public Cell cell(int column, int row) {
-        return cells[row][column];
-    }
-    
-    /**
-     * Sets the state of a specified cell within the buffer
-     * 
-     * @param column the column of the target cell
-     * @param row    the row of the target cell
-     * @param state  the state to set the target cell in the buffer
-     */
-    public void setBufferCell(int column, int row, Cell state) {
-        bufferCells[row][column] = state;
+    public void stepForwardGenerations(int NumberOfgenerations) {
+        
     }
     
     /**
      * 'Pushes' the buffer onto the grid. I.e. Overrides the grid such that it is identicle to the buffer
      */
-    public void pushBuffer() {
+    private void pushBuffer() {
         for(int rowIndex = 0;rowIndex<cells.length;rowIndex++) {
             for(int columnIndex = 0;columnIndex<cells.length;columnIndex++) {
                 cells[rowIndex][columnIndex] = bufferCells[rowIndex][columnIndex];
@@ -83,7 +65,7 @@ class StandardGameGrid implements GameGrid {
      * @param column the column of the target cell
      * @param row    the row of the target cell
      */
-    public int neighborNumberOfCell(int column, int row) {
+    private int neighborNumberOfCell(int column, int row) {
         int neighbors = 0;
         
         for(int rowOffset=-1;rowOffset<=1;rowOffset++) {
@@ -125,7 +107,7 @@ class StandardGameGrid implements GameGrid {
             return false;
         }
         
-        cell = cell(targetColumn, targetRow);
+        cell = cells[targetRow][targetColumn];
         cellIsNotNeighbor = ((columnOffset == 0) && (rowOffset == 0));
         if(cellIsNotNeighbor) {
             return false;

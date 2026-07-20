@@ -16,7 +16,7 @@ public class Game {
     }
     
     static Game standardTerminalGame() {
-        return new Game(GameUI.terminalGameUI(), new StandardGameGrid(25,25));
+        return new Game(GameUI.terminalGameUI(), new BorderedVariableSizeGameGrid(25,25));
     }
     
     void play() {

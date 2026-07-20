@@ -1,27 +1,20 @@
 
 /**
- * A grid responsible for holding all the cells for a game of Life.
+ * A grid for a 'Game of Life' that can step forward a through generations, changing the state of its cells which can be either dead or alive.
  */
 public interface GameGrid {
     
     /**
-     * A complete 2d array representive of this object's cell's states. The 1st dimension is row #; the 2nd dimension is column #
+     * The 2d array containing all of the cells. The 1st dimension is row #; the 2nd dimension is column #
      * 
-     * @return the 2d array of states
+     * @return the cells
      */
     public Cell[][] cells();
     
     /**
-     * Change the value of a specified cell
+     * Steps every cell forwards one generation
      * 
-     * @param column the column of the target cell
-     * @param row    the row of the target cell
-     * @param value  the value to change to cell to
+     * @param NumberOfGenerations
      */
-    public Cell setCell(int column, int row, Cell value);
-    
-    /**
-     * Steps every cell forwards one generation using the rules of Life
-     */
-    public void step();
+    public void stepForwardGenerations(int NumberOfgenerations);
 }
