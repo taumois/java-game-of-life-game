@@ -1,11 +1,10 @@
 #BlueJ class context
-#Tue Jul 21 16:35:39 NZST 2026
 comment0.target=LifeAutomataRuler
-comment0.text=\r\n Rules what the state of a cell should be.\r\n
-comment1.params=quantitiesOfNeighborsToAllowSurvival quantitiesOfNeighborsToAllowReproduction
-comment1.target=LifeAutomataRuler(int[], int[])
-comment1.text=\r\n An object of LifeAutomataRuler\r\n
-comment2.params=cell neighborsOfCell
-comment2.target=Cell rulingFromNeighborsForCell(Cell, Cell[])
-comment2.text=\r\n The ruling on what it thinks a cell should be from the info passed.\r\n \r\n @param cell            the cell to rule on\r\n @param neighborsOfCell the neighbors of the cell to rule on\r\n
+comment0.text=\r\n\ Rules\ what\ the\ state\ of\ a\ cell\ should\ be.\r\n
+comment1.params=quantitiesOfNeighborsToAllowSurvival\ quantitiesOfNeighborsToAllowReproduction
+comment1.target=LifeAutomataRuler(int[],\ int[])
+comment1.text=\r\n\ An\ object\ of\ LifeAutomataRuler\r\n
+comment2.params=cell\ quantityOfNeighbors
+comment2.target=Cell\ rulingFromNeighborsForCell(Cell,\ int)
+comment2.text=\r\n\ The\ ruling\ on\ what\ it\ thinks\ a\ cell\ should\ be\ from\ the\ info\ passed.\r\n\ \r\n\ @param\ cell\ \ \ \ \ \ \ \ \ \ \ \ the\ cell\ to\ rule\ on\r\n\ @param\ neighborsOfCell\ the\ neighbors\ of\ the\ cell\ to\ rule\ on\r\n
 numComments=3

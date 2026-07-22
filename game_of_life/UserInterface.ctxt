@@ -1,13 +1,13 @@
 #BlueJ class context
-#Tue Jul 21 16:31:22 NZST 2026
 comment0.target=UserInterface
-comment0.text=\r\n \r\n
+comment0.text=\r\n\ \r\n
 comment1.params=grid
-comment1.target=void updateGrid(Cell[][])
-comment1.text=\r\n Update the grid displayed to the user.\r\n \r\n @param grid the new grid to replace the displayed with\r\n
-comment2.params=prompt
-comment2.target=void createInputPrompt(java.lang.String)
-comment2.text=\r\n Create and display a prompt to the user for boolean input.\r\n \r\n @param prompt the message in the prompt\r\n
-comment3.target=Input lastRecievedInput()
-comment3.text=\r\n Be returned an Input object made with the last user input recieved\r\n \r\n @return the input object\r\n
+comment1.target=void\ updateGrid(Cell[][])
+comment1.text=\r\n\ Update\ the\ grid\ displayed\ to\ the\ user.\r\n\ \r\n\ @param\ grid\ the\ new\ grid\ to\ replace\ the\ displayed\ with\r\n
+comment2.params=prompt\ type
+comment2.target=void\ createInputPrompt(java.lang.String,\ InputType)
+comment2.text=\r\n\ Create\ and\ display\ a\ prompt\ to\ the\ user\ for\ boolean\ input.\r\n\ \r\n\ @param\ prompt\ the\ message\ in\ the\ prompt\r\n
+comment3.params=
+comment3.target=Input\ lastRecievedInput()
+comment3.text=\r\n\ Be\ returned\ an\ Input\ object\ made\ with\ the\ last\ user\ input\ recieved\r\n\ \r\n\ @return\ the\ input\ object\r\n
 numComments=4

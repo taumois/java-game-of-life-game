@@ -15,7 +15,7 @@ public interface UserInterface {
      * 
      * @param prompt the message in the prompt
      */
-    public void createInputPrompt(String prompt);
+    public void createInputPrompt(String prompt, InputType type);
     
     /**
      * Be returned an Input object made with the last user input recieved

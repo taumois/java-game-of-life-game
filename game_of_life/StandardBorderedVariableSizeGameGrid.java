@@ -4,13 +4,17 @@ import java.util.Random;
 /**
  * A bordered grid responsible for holding all the cells for a game of Life.
  */
-class BorderedVariableSizeGameGrid implements GameGrid {
+class StandardBorderedVariableSizeGameGrid implements Grid {
     private static final byte NEIGHBORS_PER_CELL = 8;
+    private static final int[] quantitiesOfNeighborsToAllowSurvival = {2, 3};
+    private static final int[] quantitiesOfNeighborsToAllowReproduction = {3};
+    private static final LifeAutomataRuler cellRuler = new LifeAutomataRuler(quantitiesOfNeighborsToAllowSurvival, quantitiesOfNeighborsToAllowReproduction);
     
-    private final int COLUMN_QUANTITY;
-    private final int ROW_QUANTITY;
+    private final int QUANTITY_OF_COLUMNS;
+    private final int QUANTITY_OF_ROWS;
     private Cell[][] cells;
     private Cell[][] bufferCells;
+    
     
     /**
      * Constructor for objects of class GameGrid
@@ -18,16 +22,18 @@ class BorderedVariableSizeGameGrid implements GameGrid {
      * @param width  width to make the grid
      * @param height height to make the grid
      */
-    BorderedVariableSizeGameGrid(int width, int height) {
-        this.COLUMN_QUANTITY = width;
-        this.ROW_QUANTITY = height;
+    StandardBorderedVariableSizeGameGrid(int width, int height) {
+        this.QUANTITY_OF_COLUMNS = width;
+        this.QUANTITY_OF_ROWS = height;
         
-        cells = new Cell[ROW_QUANTITY][COLUMN_QUANTITY];
-        for(int row=0;row<cells.length;row++) {
-            for(int column=0;column<cells[row].length;column++) {
-                cells[row][column] = Math.random() > 0.5 ? Cell.DEAD : Cell.ALIVE;
+        cells = new Cell[QUANTITY_OF_ROWS][QUANTITY_OF_COLUMNS];
+        bufferCells = new Cell[QUANTITY_OF_ROWS][QUANTITY_OF_COLUMNS];
+        for(int row=0;row<bufferCells.length;row++) {
+            for(int column=0;column<bufferCells[row].length;column++) {
+                bufferCells[row][column] = Math.random() > 0.5 ? Cell.DEAD : Cell.ALIVE;
             }
         }
+        pushBuffer();
     }
     
     /**
@@ -49,13 +55,23 @@ class BorderedVariableSizeGameGrid implements GameGrid {
             stepForwardAGeneration();
         }
     }
-    // ^^^ Test this?
     
     /**
      * Step forward one generation.
      */
     private void stepForwardAGeneration() {
-        //
+        
+        for(int row=0;row<QUANTITY_OF_ROWS;row++) {
+            for(int column=0;column<QUANTITY_OF_COLUMNS;column++) {
+                Cell cell = cells[row][column];
+                int cellsNumberOfLivingNeighbors = neighborNumberOfCell(column, row);
+                Cell nextStateOfCell = cellRuler.rulingFromNeighborsForCell(cell, cellsNumberOfLivingNeighbors);
+                
+                bufferCells[row][column] = nextStateOfCell;
+            }
+        }
+        
+        pushBuffer();
     }
     
     /**
@@ -136,7 +152,7 @@ class BorderedVariableSizeGameGrid implements GameGrid {
      * @param column the column number
      */
     private boolean hasColumn(int column) {
-        if((column < COLUMN_QUANTITY) && (column >= 0)) {
+        if((column < QUANTITY_OF_COLUMNS) && (column >= 0)) {
             return true;
         }
         return false;
@@ -148,7 +164,7 @@ class BorderedVariableSizeGameGrid implements GameGrid {
      * @param row the row number
      */
     private boolean hasRow(int row) {
-        if((row < ROW_QUANTITY) && (row >= 0)) {
+        if((row < QUANTITY_OF_ROWS) && (row >= 0)) {
             return true;
         }
         return false;

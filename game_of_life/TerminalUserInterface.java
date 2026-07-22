@@ -8,7 +8,7 @@ class TerminalUserInterface implements UserInterface {
     private static final char UNICODE_CLEAR_SCREEN_COMMAND = '\u000C';
     private static final char ALIVE_CELL_SYMBOL = 'W';
     private static final char DEAD_CELL_SYMBOL = '`';
-    private final Scanner INPUT = new Scannner(System.in);
+    private final Scanner SCANNER = new Scanner(System.in);
     private char[] gridToDisplay;
     private boolean isDisplayingPrompt;
     private String promptToDisplay;
@@ -28,40 +28,29 @@ class TerminalUserInterface implements UserInterface {
      */
     public void updateGrid(Cell[][] grid) {
         gridToDisplay = printableBufferFromGrid(grid);
+        clearTerminal();
+        System.out.print(gridToDisplay);
     }
     
     public void createInputPrompt(String prompt, InputType type) {
         switch(type) {
-            case InputType.BOOLEAN:
-                
-            case InputType.BOOLEAN:
-            case InputType.BOOLEAN:
-            case InputType.BOOLEAN:
+            case BOOLEAN:
+                System.out.println(prompt + "(TRUE/FALSE)");
+                //lastRecievedInput =  SCANNER.nextBoolean().getClass();
+                break;
+            case INT:
+                break;
+            case FLOAT:
+                break;
+            case STRING:
+                break;
             default:
-                throw new Exception();
+                throw new IllegalArgumentException("Unexpected input prompt type.");
         }
     }
      
     public Input lastRecievedInput() {
         return lastRecievedInput;
-    }
-    
-    /**
-     * 
-     */
-    private void refresh() {
-        clearTerminal();
-        System.out.print(gridToDisplay);
-    }
-    
-    /**
-     * Display a prompt for the user.
-     *
-     * @param prompt the prompt
-     */
-    private void promptUserForAction(String prompt) {
-        System.out.println("=========================");
-        System.out.println(prompt);
     }
     
     /**

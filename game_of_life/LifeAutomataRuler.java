@@ -35,13 +35,9 @@ public class LifeAutomataRuler {
      * @param cell            the cell to rule on
      * @param neighborsOfCell the neighbors of the cell to rule on
      */
-    Cell rulingFromNeighborsForCell(Cell cell, Cell[] neighborsOfCell) {
-        assert(neighborsOfCell.length <= 8);
+    Cell rulingFromNeighborsForCell(Cell cell, int quantityOfNeighbors) {
+        assert(quantityOfNeighbors <= 8 && quantityOfNeighbors >= 0);
         
-        int quantityOfNeighbors = 0;
-        for(Cell neighbor: neighborsOfCell) {
-            quantityOfNeighbors += cell == Cell.ALIVE ? 1 : 0;
-        }
         if(cell == Cell.ALIVE) {
             return cellShouldSurviveByQuantityOfNeighborsAsIndex[quantityOfNeighbors];
         }
