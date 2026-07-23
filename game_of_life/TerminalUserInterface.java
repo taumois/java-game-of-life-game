@@ -12,7 +12,7 @@ class TerminalUserInterface implements UserInterface {
     private char[] gridToDisplay;
     private boolean isDisplayingPrompt;
     private String promptToDisplay;
-    private Input lastRecievedInput;
+    private int lastRecievedInput;
     
     /**
      * Constructor for objects of class UI
@@ -39,16 +39,36 @@ class TerminalUserInterface implements UserInterface {
      * @param options the array of options for the user to select from after looking at the menu's prompt
      */
     public void createInputMenu(String prompt, String[] options) {
-        
+        System.out.println(prompt);
+        lastRecievedInput = intInRangeInput(1, 3);
+        System.out.println("Option #"+lastRecievedInput+" selected. ");
     }
-     
+    
+    private int intInRangeInput(int lowerBound, int upperBound) {
+        assert(upperBound >= lowerBound);
+        int intInRange = intInput();
+        while(intInRange < lowerBound || intInRange > upperBound) {
+            System.out.println("Number must fall within the range of "+lowerBound+" to "+upperBound+" (inclusive). ");
+            intInRange = intInput();
+        }
+        return intInRange;
+    }
+    
+    private int intInput() {
+        while(!SCANNER.hasNextInt()) {
+            System.out.println("Input must be an integer/whole number.  ");
+            SCANNER.next();
+        }
+        return SCANNER.nextInt();
+    }
+    
     /**
      * Be returned the index of the option the player last chose in a input menu
      * 
      * @return the index
      */
     public int lastRecievedInput() {
-        return 0;
+        return lastRecievedInput;
     }
     
     /**
