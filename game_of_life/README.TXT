@@ -1,5 +1,4 @@
 
-PROJECT TITLE: Conways Game of Life
+PROJECT TITLE: Game of Life
 AUTHORS: Isaiah Taumoepeau
-HOW TO START THIS PROJECT: n/a
-USER INSTRUCTIONS:
+HOW TO START THIS PROJECT: run Main.main()
