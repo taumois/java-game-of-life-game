@@ -32,25 +32,23 @@ class TerminalUserInterface implements UserInterface {
         System.out.print(gridToDisplay);
     }
     
-    public void createInputPrompt(String prompt, InputType type) {
-        switch(type) {
-            case BOOLEAN:
-                System.out.println(prompt + "(TRUE/FALSE)");
-                //lastRecievedInput =  SCANNER.nextBoolean().getClass();
-                break;
-            case INT:
-                break;
-            case FLOAT:
-                break;
-            case STRING:
-                break;
-            default:
-                throw new IllegalArgumentException("Unexpected input prompt type.");
-        }
+    /**
+     * Create and display a menu to display to the user for them to choose from.
+     * 
+     * @param prompt a prompt for the menu
+     * @param options the array of options for the user to select from after looking at the menu's prompt
+     */
+    public void createInputMenu(String prompt, String[] options) {
+        
     }
      
-    public Input lastRecievedInput() {
-        return lastRecievedInput;
+    /**
+     * Be returned the index of the option the player last chose in a input menu
+     * 
+     * @return the index
+     */
+    public int lastRecievedInput() {
+        return 0;
     }
     
     /**
