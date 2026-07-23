@@ -16,8 +16,13 @@ public class Game {
     }
     
     void play() {
-        GRID.stepForwardGenerations(1);
-        USER_INTERFACE.updateGrid(GRID.cells());
-        USER_INTERFACE.createInputPrompt("Hello world", InputType.STRING);
+        boolean playing = true;
+        while(playing) {
+            GRID.stepForwardGenerations(1);
+            USER_INTERFACE.updateGrid(GRID.cells());
+            String menuPrompt = "How are you?";
+            String[] menuOptions = {"Good", "Bad"};
+            USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
+        }
     }
 }

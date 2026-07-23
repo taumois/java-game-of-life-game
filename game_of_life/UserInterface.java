@@ -11,16 +11,17 @@ public interface UserInterface {
     public void updateGrid(Cell[][] grid);
     
     /**
-     * Create and display a prompt to the user for boolean input.
+     * Create and display a menu to display to the user for them to choose from.
      * 
-     * @param prompt the message in the prompt
+     * @param prompt a prompt for the menu
+     * @param options the array of options for the user to select from after looking at the menu's prompt
      */
-    public void createInputPrompt(String prompt, InputType type);
+    public void createInputMenu(String prompt, String[] options);
     
     /**
-     * Be returned an Input object made with the last user input recieved
+     * Be returned the index of the option the player last chose in a input menu
      * 
-     * @return the input object
+     * @return the index
      */
-    public Input lastRecievedInput();
+    public int lastRecievedInput();
 }
