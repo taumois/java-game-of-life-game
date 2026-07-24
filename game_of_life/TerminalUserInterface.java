@@ -71,11 +71,13 @@ class TerminalUserInterface implements UserInterface {
     }
     
     private int intInput(String inputRequirementsMessage) {
-        while(!scanner.hasNextInt()) {
-            System.out.println(inputRequirementsMessage);
-            safeInput();
-        }
-        return scanner.nextInt();
+        // while(!scanner.hasNextInt()) {
+            // System.out.println(inputRequirementsMessage);
+            // safeInput();
+        // }
+        // return scanner.nextInt();
+        double num = Math.random() * 2.0;
+        return 1;
     }
     
     private String safeInput() {

@@ -56,7 +56,7 @@ public class Game {
                 expertMenu();
                 break;
             case 2:
-                return; // Returns to the Main Menu
+                mainMenu();
             default:
                 throw new RuntimeException();
         }
