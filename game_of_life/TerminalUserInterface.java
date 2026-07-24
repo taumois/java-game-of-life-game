@@ -8,8 +8,8 @@ class TerminalUserInterface implements UserInterface {
     private static final char UNICODE_CLEAR_SCREEN_COMMAND = '\u000C';
     private static final char ALIVE_CELL_SYMBOL = 'W';
     private static final char DEAD_CELL_SYMBOL = '`';
+    
     private Scanner scanner = new Scanner(System.in);
-    private char[] gridToDisplay;
     private boolean isDisplayingPrompt;
     private String promptToDisplay;
     private int indexOfLastSelectedOption;
@@ -19,7 +19,7 @@ class TerminalUserInterface implements UserInterface {
      * Constructor for objects of class UI
      */
     TerminalUserInterface() {
-        scanner.useDelimiter("\n");
+        scanner.useDelimiter(",|\\n");
     }
     
     /**
@@ -28,7 +28,7 @@ class TerminalUserInterface implements UserInterface {
      * @param grid the new grid to replace the displayed with
      */
     public void updateGrid(Cell[][] grid) {
-        gridToDisplay = printableBufferFromGrid(grid);
+        char[] gridToDisplay = printableBufferFromGrid(grid);
         clearTerminal();
         System.out.print(gridToDisplay);
         
@@ -48,6 +48,7 @@ class TerminalUserInterface implements UserInterface {
             menu = menu + "\n"+(n+1)+") - "+options[n];
             // E.g. "1) - Well"
         }
+        clearTerminal();
         System.out.println(menu);
         /* E.g. 
          * "How are you?
@@ -71,13 +72,11 @@ class TerminalUserInterface implements UserInterface {
     }
     
     private int intInput(String inputRequirementsMessage) {
-        // while(!scanner.hasNextInt()) {
-            // System.out.println(inputRequirementsMessage);
-            // safeInput();
-        // }
-        // return scanner.nextInt();
-        double num = Math.random() * 2.0;
-        return 1;
+        while(!scanner.hasNextInt()) {
+            System.out.println(inputRequirementsMessage);
+            safeInput();
+        }
+        return scanner.nextInt();
     }
     
     private String safeInput() {
