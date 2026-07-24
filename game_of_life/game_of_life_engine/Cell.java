@@ -1,3 +1,5 @@
+package game_of_life_engine;
+
 
 /**
  * 

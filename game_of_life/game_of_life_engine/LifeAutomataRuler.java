@@ -1,3 +1,5 @@
+package game_of_life_engine;
+
 
 /**
  * Rules what the state of a cell should be.
