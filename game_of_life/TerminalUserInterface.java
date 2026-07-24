@@ -31,7 +31,9 @@ class TerminalUserInterface implements UserInterface {
         gridToDisplay = printableBufferFromGrid(grid);
         clearTerminal();
         System.out.print(gridToDisplay);
+        
         System.out.println("Option #"+(indexOfLastSelectedOption+1)+": "+lastSelectedOption+" was selected. ");
+        // E.g. Option #2: Unwell was selected. 
     }
     
     /**
@@ -44,15 +46,15 @@ class TerminalUserInterface implements UserInterface {
         String menu = prompt;
         for(int n=0;n<options.length;n++) {
             menu = menu + "\n"+(n+1)+") - "+options[n];
-            // E.g. "2) - Good"
+            // E.g. "1) - Well"
         }
         System.out.println(menu);
         /* E.g. 
          * "How are you?
-         * 1) - Great
-         * 2) -  Good
-         * 3) - Terrible"
+         * 1) - Well
+         * 2) - Unwell"
          */ 
+
         indexOfLastSelectedOption = intInRangeInput("Please enter a number picked from one of the options", 1, options.length) - 1;
         lastSelectedOption = options[indexOfLastSelectedOption];
     }
@@ -94,7 +96,7 @@ class TerminalUserInterface implements UserInterface {
      * 
      * @return the index
      */
-    public int IndexOflastSelectedOptionByUser() {
+    public int indexOflastSelectedOptionByUser() {
         return indexOfLastSelectedOption;
     }
     
