@@ -1,6 +1,5 @@
 
 import java.util.Scanner;
-import java.io.IOException;
 
 /**
  * User Interface.
@@ -72,9 +71,19 @@ class TerminalUserInterface implements UserInterface {
     private int intInput(String inputRequirementsMessage) {
         while(!SCANNER.hasNextInt()) {
             System.out.println(inputRequirementsMessage);
-            SCANNER.next();
+            safeInput();
         }
         return SCANNER.nextInt();
+    }
+    
+    private String safeInput() {
+        String input = null;
+        while(input == null) {
+            try {
+                input = SCANNER.next();
+            } catch(java.util.NoSuchElementException exception) {}
+        }
+        return input;
     }
     
     /**
