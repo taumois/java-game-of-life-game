@@ -1,5 +1,6 @@
 
 import java.util.Scanner;
+import java.io.IOException;
 
 /**
  * User Interface.
@@ -12,13 +13,14 @@ class TerminalUserInterface implements UserInterface {
     private char[] gridToDisplay;
     private boolean isDisplayingPrompt;
     private String promptToDisplay;
-    private int lastRecievedInput;
+    private int indexOfLastSelectedOption;
+    private String lastSelectedOption;
     
     /**
      * Constructor for objects of class UI
      */
     TerminalUserInterface() {
-        
+        SCANNER.useDelimiter("\n");
     }
     
     /**
@@ -30,6 +32,7 @@ class TerminalUserInterface implements UserInterface {
         gridToDisplay = printableBufferFromGrid(grid);
         clearTerminal();
         System.out.print(gridToDisplay);
+        System.out.println("Option #"+(indexOfLastSelectedOption+1)+": "+lastSelectedOption+" was selected. ");
     }
     
     /**
@@ -39,24 +42,36 @@ class TerminalUserInterface implements UserInterface {
      * @param options the array of options for the user to select from after looking at the menu's prompt
      */
     public void createInputMenu(String prompt, String[] options) {
-        System.out.println(prompt);
-        lastRecievedInput = intInRangeInput(1, 3);
-        System.out.println("Option #"+lastRecievedInput+" selected. ");
+        String menu = prompt;
+        for(int n=0;n<options.length;n++) {
+            menu = menu + "\n"+(n+1)+") - "+options[n];
+            // E.g. "2) - Good"
+        }
+        System.out.println(menu);
+        /* E.g. 
+         * "How are you?
+         * 1) - Great
+         * 2) -  Good
+         * 3) - Terrible"
+         */ 
+        indexOfLastSelectedOption = intInRangeInput("Please enter a number picked from one of the options", 1, options.length) - 1;
+        lastSelectedOption = options[indexOfLastSelectedOption];
     }
     
-    private int intInRangeInput(int lowerBound, int upperBound) {
+    private int intInRangeInput(String inputRequirementsMessage, int lowerBound, int upperBound) {
         assert(upperBound >= lowerBound);
-        int intInRange = intInput();
+        int intInRange;
+        intInRange = intInput(inputRequirementsMessage);
         while(intInRange < lowerBound || intInRange > upperBound) {
-            System.out.println("Number must fall within the range of "+lowerBound+" to "+upperBound+" (inclusive). ");
-            intInRange = intInput();
+            System.out.println(inputRequirementsMessage);
+            intInRange = intInput(inputRequirementsMessage);
         }
         return intInRange;
     }
     
-    private int intInput() {
+    private int intInput(String inputRequirementsMessage) {
         while(!SCANNER.hasNextInt()) {
-            System.out.println("Input must be an integer/whole number.  ");
+            System.out.println(inputRequirementsMessage);
             SCANNER.next();
         }
         return SCANNER.nextInt();
@@ -67,8 +82,8 @@ class TerminalUserInterface implements UserInterface {
      * 
      * @return the index
      */
-    public int lastRecievedInput() {
-        return lastRecievedInput;
+    public int IndexOflastSelectedOptionByUser() {
+        return indexOfLastSelectedOption;
     }
     
     /**

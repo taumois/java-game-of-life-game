@@ -23,5 +23,5 @@ public interface UserInterface {
      * 
      * @return the index
      */
-    public int lastRecievedInput();
+    public int IndexOflastSelectedOptionByUser();
 }

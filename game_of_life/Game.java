@@ -20,9 +20,17 @@ public class Game {
         while(playing) {
             GRID.stepForwardGenerations(1);
             USER_INTERFACE.updateGrid(GRID.cells());
+            
+            
             String menuPrompt = "How are you?";
             String[] menuOptions = {"Good", "Bad"};
             USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
+            
+            if(USER_INTERFACE.IndexOflastSelectedOptionByUser() == 1) {
+                System.out.println("That's good.");
+            } else {
+                System.out.println("Why not?");
+            }
         }
     }
 }
