@@ -8,7 +8,7 @@ class TerminalUserInterface implements UserInterface {
     private static final char UNICODE_CLEAR_SCREEN_COMMAND = '\u000C';
     private static final char ALIVE_CELL_SYMBOL = 'W';
     private static final char DEAD_CELL_SYMBOL = '`';
-    private final Scanner SCANNER = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
     private char[] gridToDisplay;
     private boolean isDisplayingPrompt;
     private String promptToDisplay;
@@ -19,7 +19,7 @@ class TerminalUserInterface implements UserInterface {
      * Constructor for objects of class UI
      */
     TerminalUserInterface() {
-        SCANNER.useDelimiter("\n");
+        scanner.useDelimiter("\n");
     }
     
     /**
@@ -69,19 +69,22 @@ class TerminalUserInterface implements UserInterface {
     }
     
     private int intInput(String inputRequirementsMessage) {
-        while(!SCANNER.hasNextInt()) {
+        while(!scanner.hasNextInt()) {
             System.out.println(inputRequirementsMessage);
             safeInput();
         }
-        return SCANNER.nextInt();
+        return scanner.nextInt();
     }
     
     private String safeInput() {
         String input = null;
         while(input == null) {
             try {
-                input = SCANNER.next();
-            } catch(java.util.NoSuchElementException exception) {}
+                input = scanner.next();
+            } catch(java.util.NoSuchElementException exception) {
+                scanner = new Scanner(System.in);
+                scanner.useDelimiter("\n");
+            }
         }
         return input;
     }
