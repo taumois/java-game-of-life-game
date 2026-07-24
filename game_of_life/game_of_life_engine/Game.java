@@ -13,11 +13,15 @@ public class Game {
         this.GRID = grid;
     }
     
-    static Game standardGame() {
+    public static Game standardGame() {
         return new Game(new TerminalUserInterface(), new StandardBorderedVariableSizeGameGrid(25,25));
     }
     
-    void mainMenu() {
+    public void play() {
+        mainMenu();
+    }
+    
+    private void mainMenu() {
         boolean playing = true;
         
         while(playing) {
