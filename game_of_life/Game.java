@@ -83,6 +83,7 @@ public class Game {
             String[] menuOptions = {
                     "Advance 'x' Gen's",
                     "Toggle a Cell",
+                    "Randomise Grid",
                     "Fill Grid",
                     "Empty Grid",
                     "Invert Grid",
@@ -119,7 +120,19 @@ public class Game {
                 }
                 USER_INTERFACE.updateGrid(grid.cells());
                 break;
-            case 2: // Fill Grid
+            case 2: // Randomise Grid
+                {
+                    Cell[][] cells = grid.cells();
+                    
+                    for(int row=0;row<cells.length;row++) {
+                        for(int column=0;column<cells[row].length;column++) {
+                            cells[row][column] = Math.random() > 0.5 ? Cell.ALIVE : Cell.DEAD;
+                        }
+                    }
+                }
+                USER_INTERFACE.updateGrid(grid.cells());
+                break;
+            case 3: // Fill Grid
                 {
                     Cell[][] cells = grid.cells();
                     
@@ -131,7 +144,7 @@ public class Game {
                 }
                 USER_INTERFACE.updateGrid(grid.cells());
                 break;
-            case 3: // Empty Grid
+            case 4: // Empty Grid
                 {
                     Cell[][] cells = grid.cells();
                     
@@ -143,7 +156,7 @@ public class Game {
                 }
                 USER_INTERFACE.updateGrid(grid.cells());
                 break;
-            case 4: // Invert Grid
+            case 5: // Invert Grid
                 {
                     Cell[][] cells = grid.cells();
                     
@@ -155,13 +168,13 @@ public class Game {
                 }
                 USER_INTERFACE.updateGrid(grid.cells());
                 break;
-            case 5: // Get Save Code
+            case 6: // Get Save Code
                 getSaveCodeMenu();
                 break;
-            case 6: // Load Save
+            case 7: // Load Save
                 loadSaveMenu();
                 break;
-            case 7: // Return
+            case 8: // Return
                 break;
             default:
                 throw new RuntimeException();
@@ -171,10 +184,10 @@ public class Game {
     private void loadSaveMenu() {
         {
             String menuPrompt = 
-                    "You can enter a code from the 'Get Save Code' menu with \n"+
-                    "the option below to load it." +
+                    "You can get save codes from the 'Get Save Code' menu, \n"+
+                    "then keep them safe to load here later." +
                     "\n";
-            String[] menuOptions = {"Enter Save Code Option","Return"};
+            String[] menuOptions = {"I Have a Code to Use","Return"};
             USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
         }
         
@@ -182,18 +195,22 @@ public class Game {
         switch(option) {
             case  0:
                 {
-                    String code = USER_INTERFACE.stringInput("The save code please").trim();
+                    String code = USER_INTERFACE.stringInput(
+                    "Paste the save code now; \n" +
+                    "warning, if the code is invalid, nothing will happen").trim();
                     
                     Scanner codeParser = new Scanner(code);
                     codeParser.useDelimiter("a|\\n");
-                    this.grid = new UnborderedVariableSizeGameGrid(codeParser.nextInt(), codeParser.nextInt());
-                    for(int row=0;row<grid.cells().length;row++) {
-                        for(int column=0;column<grid.cells()[0].length;column++) {
-                            grid.cells()[row][column] = codeParser.nextInt() == 1 ? Cell.ALIVE : Cell.DEAD;
+                    try {
+                        this.grid = new UnborderedVariableSizeGameGrid(codeParser.nextInt(), codeParser.nextInt());
+                        for(int row=0;row<grid.cells().length;row++) {
+                            for(int column=0;column<grid.cells()[0].length;column++) {
+                                grid.cells()[row][column] = codeParser.nextInt() == 1 ? Cell.ALIVE : Cell.DEAD;
+                            }
                         }
-                    }
+                        USER_INTERFACE.updateGrid(grid.cells());
+                    } catch(java.util.NoSuchElementException exception) {}
                 }
-                USER_INTERFACE.updateGrid(grid.cells());
             case 1:
                 break;
             default:

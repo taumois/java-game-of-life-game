@@ -8,7 +8,7 @@ class UnborderedVariableSizeGameGrid implements Grid {
     private static final byte NEIGHBORS_PER_CELL = 8;
     private static final int[] DEFAULT_QUANTITES_OF_NEIGHBORS_TO_ALLOW_SURVIVAL = {2, 3};
     private static final int[] DEFAULT_QUANTITES_OF_NEIGHBORS_TO_ALLOW_REPRODUCTION = {3};
-    private final CellRuler CELL_RULER = new CellRuler(quantitiesOfNeighborsToAllowSurvival, quantitiesOfNeighborsToAllowReproduction);
+    private final CellRuler CELL_RULER;
     
     private final int QUANTITY_OF_COLUMNS;
     private final int QUANTITY_OF_ROWS;
@@ -26,7 +26,7 @@ class UnborderedVariableSizeGameGrid implements Grid {
         this.QUANTITY_OF_COLUMNS = width;
         this.QUANTITY_OF_ROWS = height;
         
-        cellRuler = new CellRuler(
+        CELL_RULER = new CellRuler(
                 DEFAULT_QUANTITES_OF_NEIGHBORS_TO_ALLOW_SURVIVAL, 
                 DEFAULT_QUANTITES_OF_NEIGHBORS_TO_ALLOW_REPRODUCTION);
         
@@ -43,9 +43,13 @@ class UnborderedVariableSizeGameGrid implements Grid {
     /**
      * 
      */
-    UnborderedVariableSizeGameGrid(Cell[][] cells) {
+    UnborderedVariableSizeGameGrid(Cell[][] cells, int[] quantitiesOfNeighborsToAllowSurvival, int[] quantitesOfNeighborsToAllowReproduction) {
         this.QUANTITY_OF_COLUMNS = cells[0].length;
         this.QUANTITY_OF_ROWS = cells.length;
+        
+        CELL_RULER = new CellRuler(
+                quantitiesOfNeighborsToAllowSurvival, 
+                quantitesOfNeighborsToAllowReproduction);
         
         this.cells = new Cell[QUANTITY_OF_ROWS][QUANTITY_OF_COLUMNS];
         bufferCells = new Cell[QUANTITY_OF_ROWS][QUANTITY_OF_COLUMNS];
@@ -86,7 +90,7 @@ class UnborderedVariableSizeGameGrid implements Grid {
             for(int column=0;column<QUANTITY_OF_COLUMNS;column++) {
                 Cell cell = cells[row][column];
                 int cellsNumberOfLivingNeighbors = neighborNumberOfCell(column, row);
-                Cell nextStateOfCell = cellRuler.rulingFromNeighborsForCell(cell, cellsNumberOfLivingNeighbors);
+                Cell nextStateOfCell = CELL_RULER.rulingFromNeighborsForCell(cell, cellsNumberOfLivingNeighbors);
                 
                 bufferCells[row][column] = nextStateOfCell;
             }
