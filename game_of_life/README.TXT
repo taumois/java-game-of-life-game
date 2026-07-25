@@ -1,1 +1,0 @@
-Run the main() method in the Main class.
