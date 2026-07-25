@@ -1,3 +1,3 @@
-Run the main() method in the game_of_life/Main.java class to play Game of Life.
+Run the "game_of_life/Main.java" classes main() or main(String[] args)
 
-Thanks to the mathetician John Conway for coming up with the original.
+Credit for the orginal 'Conways Game of Life' goes to the mathetician John Conway
