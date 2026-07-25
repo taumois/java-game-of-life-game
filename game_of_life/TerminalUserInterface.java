@@ -8,6 +8,7 @@ class TerminalUserInterface implements UserInterface {
     private static final char UNICODE_CLEAR_SCREEN_COMMAND = '\u000C';
     private static final char ALIVE_CELL_SYMBOL = 'W';
     private static final char DEAD_CELL_SYMBOL = '`';
+    private static final String DELIMITER_REGEX = "-|\\n";
     
     private Scanner scanner;
     private boolean isDisplayingPrompt;
@@ -21,6 +22,7 @@ class TerminalUserInterface implements UserInterface {
      */
     TerminalUserInterface() {
         scanner = new Scanner(System.in);
+        scanner.useDelimiter(DELIMITER_REGEX);
         gridToDisplay = "";
         menuToDisplay = "";
         lastSelectedOptionText = "";
@@ -133,6 +135,7 @@ class TerminalUserInterface implements UserInterface {
                 input = scanner.next();
             } catch(java.util.NoSuchElementException exception) {
                 scanner = new Scanner(System.in);
+                scanner.useDelimiter(DELIMITER_REGEX);
             }
         }
         return input;

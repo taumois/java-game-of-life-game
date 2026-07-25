@@ -6,9 +6,9 @@ import java.util.Random;
  */
 class UnborderedVariableSizeGameGrid implements Grid {
     private static final byte NEIGHBORS_PER_CELL = 8;
-    private static final int[] quantitiesOfNeighborsToAllowSurvival = {2, 3};
-    private static final int[] quantitiesOfNeighborsToAllowReproduction = {3};
-    private static final CellRuler cellRuler = new CellRuler(quantitiesOfNeighborsToAllowSurvival, quantitiesOfNeighborsToAllowReproduction);
+    private static final int[] DEFAULT_QUANTITES_OF_NEIGHBORS_TO_ALLOW_SURVIVAL = {2, 3};
+    private static final int[] DEFAULT_QUANTITES_OF_NEIGHBORS_TO_ALLOW_REPRODUCTION = {3};
+    private final CellRuler CELL_RULER = new CellRuler(quantitiesOfNeighborsToAllowSurvival, quantitiesOfNeighborsToAllowReproduction);
     
     private final int QUANTITY_OF_COLUMNS;
     private final int QUANTITY_OF_ROWS;
@@ -25,6 +25,10 @@ class UnborderedVariableSizeGameGrid implements Grid {
     UnborderedVariableSizeGameGrid(int width, int height) {
         this.QUANTITY_OF_COLUMNS = width;
         this.QUANTITY_OF_ROWS = height;
+        
+        cellRuler = new CellRuler(
+                DEFAULT_QUANTITES_OF_NEIGHBORS_TO_ALLOW_SURVIVAL, 
+                DEFAULT_QUANTITES_OF_NEIGHBORS_TO_ALLOW_REPRODUCTION);
         
         cells = new Cell[QUANTITY_OF_ROWS][QUANTITY_OF_COLUMNS];
         bufferCells = new Cell[QUANTITY_OF_ROWS][QUANTITY_OF_COLUMNS];

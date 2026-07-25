@@ -6,13 +6,13 @@ import java.util.Scanner;
  */
 public class Game {
     private final UserInterface USER_INTERFACE;
-    private final Grid GRID;
+    private Grid grid;
     
     private boolean running;
     
     Game(UserInterface userInterface, Grid grid) {
         this.USER_INTERFACE = userInterface;
-        this.GRID = grid;
+        this.grid = grid;
     }
     
     public static Game standardGame() {
@@ -22,6 +22,7 @@ public class Game {
     public void run() {
         running = true;
         mainMenu();
+        System.exit(0);
     }
     
     private void mainMenu() {
@@ -61,8 +62,8 @@ public class Game {
             int option = USER_INTERFACE.numberOfLastSelectedOptionByUser();
             switch(option) {
                 case 0: // Next Generation
-                    GRID.stepForwardGenerations(1);
-                    USER_INTERFACE.updateGrid(GRID.cells());
+                    grid.stepForwardGenerations(1);
+                    USER_INTERFACE.updateGrid(grid.cells());
                     break;
                 case 1: // Expert Controls
                     expertMenu();
@@ -98,13 +99,13 @@ public class Game {
                 {
                     USER_INTERFACE.createInputRangeMenu("Enter the number of gens to advance(1-999)", 1, 999);
                     int x = USER_INTERFACE.numberOfLastSelectedOptionByUser();
-                    GRID.stepForwardGenerations(x);
+                    grid.stepForwardGenerations(x);
                 }
-                USER_INTERFACE.updateGrid(GRID.cells());
+                USER_INTERFACE.updateGrid(grid.cells());
                 break;
             case 1: // Toggle A Cell
                 {
-                    Cell[][] cells = GRID.cells();
+                    Cell[][] cells = grid.cells();
                     
                     int width = cells[0].length;
                     USER_INTERFACE.createInputRangeMenu("Please enter a column no. ("+1+"-"+width+")", 1, width);
@@ -116,11 +117,11 @@ public class Game {
                     
                     cells[y][x] = cells[y][x] == Cell.ALIVE ? Cell.DEAD : Cell.ALIVE;
                 }
-                USER_INTERFACE.updateGrid(GRID.cells());
+                USER_INTERFACE.updateGrid(grid.cells());
                 break;
             case 2: // Fill Grid
                 {
-                    Cell[][] cells = GRID.cells();
+                    Cell[][] cells = grid.cells();
                     
                     for(int row=0;row<cells.length;row++) {
                         for(int column=0;column<cells[row].length;column++) {
@@ -128,11 +129,11 @@ public class Game {
                         }
                     }
                 }
-                USER_INTERFACE.updateGrid(GRID.cells());
+                USER_INTERFACE.updateGrid(grid.cells());
                 break;
             case 3: // Empty Grid
                 {
-                    Cell[][] cells = GRID.cells();
+                    Cell[][] cells = grid.cells();
                     
                     for(int row=0;row<cells.length;row++) {
                         for(int column=0;column<cells[row].length;column++) {
@@ -140,11 +141,11 @@ public class Game {
                         }
                     }
                 }
-                USER_INTERFACE.updateGrid(GRID.cells());
+                USER_INTERFACE.updateGrid(grid.cells());
                 break;
             case 4: // Invert Grid
                 {
-                    Cell[][] cells = GRID.cells();
+                    Cell[][] cells = grid.cells();
                     
                     for(int row=0;row<cells.length;row++) {
                         for(int column=0;column<cells[row].length;column++) {
@@ -152,7 +153,7 @@ public class Game {
                         }
                     }
                 }
-                USER_INTERFACE.updateGrid(GRID.cells());
+                USER_INTERFACE.updateGrid(grid.cells());
                 break;
             case 5: // Get Save Code
                 getSaveCodeMenu();
@@ -181,37 +182,18 @@ public class Game {
         switch(option) {
             case  0:
                 {
-                    char[] code = USER_INTERFACE.stringInput("The save code please").trim().toCharArray();
+                    String code = USER_INTERFACE.stringInput("The save code please").trim();
                     
-                    String cells = "";
-                    Cell previousCell = Cell.ALIVE;
-                    for(int i=0;i<code.length;) {
-                        int num=0;
-                        boolean nw = false;
-                        do {
-                            ++num;
-                            char c = code[(i+num) % code.length];
-                            if(previousCell == Cell.ALIVE && c == '1') {
-                                nw = false;
-                            } else {
-                                nw = true;
-                            }
-                        } while(!nw);
-                        i += num;
-                        for(int j=0;j<num;j++) {
-                            cells += " ";
-                            cells += previousCell == Cell.ALIVE ? "1" : "0";
-                        }
-                        
-                        if(previousCell == Cell.DEAD) {
-                            previousCell = Cell.ALIVE;
-                        } else {
-                            previousCell = Cell.DEAD;
+                    Scanner codeParser = new Scanner(code);
+                    codeParser.useDelimiter("a|\\n");
+                    this.grid = new UnborderedVariableSizeGameGrid(codeParser.nextInt(), codeParser.nextInt());
+                    for(int row=0;row<grid.cells().length;row++) {
+                        for(int column=0;column<grid.cells()[0].length;column++) {
+                            grid.cells()[row][column] = codeParser.nextInt() == 1 ? Cell.ALIVE : Cell.DEAD;
                         }
                     }
-                    System.err.println(cells);
-                    throw new IllegalArgumentException();
                 }
+                USER_INTERFACE.updateGrid(grid.cells());
             case 1:
                 break;
             default:
@@ -225,20 +207,15 @@ public class Game {
                 "You may copy the code below; it can be pasted \n" +
                 "into the 'Load Code' menu somewhere else \n" +
                 "to reload your current grid/save. \n " +
-                "\n";
+                "\n" +
+                grid.cells()[0].length + "a" +
+                grid.cells().length + "a";
                 
-        int counter = 0;
-        Cell previousCell = Cell.ALIVE;
-        for(Cell[] rowOfCells: GRID.cells()) {
+        for(Cell[] rowOfCells: grid.cells()) {
             for(Cell cell: rowOfCells) {
-                if(cell != previousCell || counter == 9) {
-                    menuPrompt += counter;
-                    counter = 0;
-                }
-                previousCell = cell;
-                counter++;
+                menuPrompt += cell == Cell.ALIVE ? "1a" : "0a";
             }
-            menuPrompt += "a";
+            menuPrompt += "\n";
         }
         menuPrompt += "\n";
                 
