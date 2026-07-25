@@ -170,17 +170,48 @@ public class Game {
     private void loadSaveMenu() {
         {
             String menuPrompt = 
-                    "Enter a code from the 'Get Save Code' menu here \n"+
-                    "to load it." +
+                    "You can enter a code from the 'Get Save Code' menu with \n"+
+                    "the option below to load it." +
                     "\n";
-            String[] menuOptions = {"ENTER SAVE CODE","Return"};
+            String[] menuOptions = {"Enter Save Code Option","Return"};
             USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
         }
         
         int option = USER_INTERFACE.numberOfLastSelectedOptionByUser();
         switch(option) {
-            case 0:
-                USER_INTERFACE.createInputRangeMenu("The save code please", 0, 99999);
+            case  0:
+                {
+                    char[] code = USER_INTERFACE.stringInput("The save code please").trim().toCharArray();
+                    
+                    String cells = "";
+                    Cell previousCell = Cell.ALIVE;
+                    for(int i=0;i<code.length;) {
+                        int num=0;
+                        boolean nw = false;
+                        do {
+                            ++num;
+                            char c = code[(i+num) % code.length];
+                            if(previousCell == Cell.ALIVE && c == '1') {
+                                nw = false;
+                            } else {
+                                nw = true;
+                            }
+                        } while(!nw);
+                        i += num;
+                        for(int j=0;j<num;j++) {
+                            cells += " ";
+                            cells += previousCell == Cell.ALIVE ? "1" : "0";
+                        }
+                        
+                        if(previousCell == Cell.DEAD) {
+                            previousCell = Cell.ALIVE;
+                        } else {
+                            previousCell = Cell.DEAD;
+                        }
+                    }
+                    System.err.println(cells);
+                    throw new IllegalArgumentException();
+                }
             case 1:
                 break;
             default:
@@ -194,9 +225,8 @@ public class Game {
                 "You may copy the code below; it can be pasted \n" +
                 "into the 'Load Code' menu somewhere else \n" +
                 "to reload your current grid/save. \n " +
-                "\n" +
-                GRID.cells()[0].length +
-                GRID.cells().length;
+                "\n";
+                
         int counter = 0;
         Cell previousCell = Cell.ALIVE;
         for(Cell[] rowOfCells: GRID.cells()) {
@@ -208,6 +238,7 @@ public class Game {
                 previousCell = cell;
                 counter++;
             }
+            menuPrompt += "a";
         }
         menuPrompt += "\n";
                 

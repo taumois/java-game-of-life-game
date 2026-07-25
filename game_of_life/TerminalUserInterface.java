@@ -93,7 +93,18 @@ class TerminalUserInterface implements UserInterface {
 
         refresh();
         
-        numberOfLastSelectedOption = intInRangeInput("Please enter a valid number within the range", lowerBound, upperBound);
+        numberOfLastSelectedOption = intInRangeInput("Please enter a valid whole number within the range", lowerBound, upperBound);
+    }
+    
+    /**
+     * 
+     */
+    public String stringInput(String prompt) {
+        menuToDisplay = prompt;
+
+        refresh();
+        
+        return safeInput();
     }
     
     private int intInRangeInput(String inputRequirementsMessage, int lowerBound, int upperBound) {

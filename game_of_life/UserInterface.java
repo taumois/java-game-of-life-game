@@ -24,6 +24,11 @@ public interface UserInterface {
     public void createInputRangeMenu(String prompt, int lowerBound, int upperBound);
     
     /**
+     * 
+     */
+    public String stringInput(String prompt);
+    
+    /**
      * Be returned the number of the option the player last chose in a input menu
      * 
      * @return the number
