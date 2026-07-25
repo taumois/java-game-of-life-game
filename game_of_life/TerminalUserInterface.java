@@ -1,4 +1,4 @@
-package game_of_life_engine;
+ 
 
 
 import java.util.Scanner;
