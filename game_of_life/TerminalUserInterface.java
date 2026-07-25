@@ -21,8 +21,6 @@ class TerminalUserInterface implements UserInterface {
      */
     TerminalUserInterface() {
         scanner = new Scanner(System.in);
-        scanner.useDelimiter(";|\\n"); // Regex for a period/newline delimiter
-        
         gridToDisplay = "";
         menuToDisplay = "";
         lastSelectedOptionText = "";
@@ -76,7 +74,11 @@ class TerminalUserInterface implements UserInterface {
 
         refresh();
         
-        numberOfLastSelectedOption = intInRangeInput("Please enter a number picked from one of the options", 1, options.length) - 1;
+        numberOfLastSelectedOption = 
+                intInRangeInput("Please enter a number picked from one of the options \n" +
+                "[E.g. you could type and enter '1', to select menu item '1)']",
+                1, 
+                options.length) - 1;
         
         lastSelectedOptionText =
                 "Option #"+(numberOfLastSelectedOption+1)+": " +
@@ -120,7 +122,6 @@ class TerminalUserInterface implements UserInterface {
                 input = scanner.next();
             } catch(java.util.NoSuchElementException exception) {
                 scanner = new Scanner(System.in);
-                scanner.useDelimiter("\n");
             }
         }
         return input;

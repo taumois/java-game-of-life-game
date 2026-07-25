@@ -37,6 +37,23 @@ class UnborderedVariableSizeGameGrid implements Grid {
     }
     
     /**
+     * 
+     */
+    UnborderedVariableSizeGameGrid(Cell[][] cells) {
+        this.QUANTITY_OF_COLUMNS = cells[0].length;
+        this.QUANTITY_OF_ROWS = cells.length;
+        
+        this.cells = new Cell[QUANTITY_OF_ROWS][QUANTITY_OF_COLUMNS];
+        bufferCells = new Cell[QUANTITY_OF_ROWS][QUANTITY_OF_COLUMNS];
+        for(int row=0;row<bufferCells.length;row++) {
+            for(int column=0;column<bufferCells[row].length;column++) {
+                bufferCells[row][column] = cells[row][column];
+            }
+        }
+        pushBuffer();
+    }
+    
+    /**
      * Be returned the 2d array containing all of this grids cells. The 1st dimension is row #; the 2nd dimension is column #.
      * 
      * @return the cells

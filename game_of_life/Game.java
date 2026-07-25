@@ -1,4 +1,6 @@
 
+import java.util.Scanner;
+
 /**
  * 
  */
@@ -52,13 +54,13 @@ public class Game {
         boolean playing = true;
         
         while(playing) {
-            String menuPrompt = "What would you like to do?";
-            String[] menuOptions = {"Advance One Generation", "Expert Controls", "Return"};
+            String menuPrompt = "Game of Life";
+            String[] menuOptions = {"Next Generation", "Expert Controls", "Return"};
             USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
             
             int option = USER_INTERFACE.numberOfLastSelectedOptionByUser();
             switch(option) {
-                case 0: // Advance One Generation
+                case 0: // Next Generation
                     GRID.stepForwardGenerations(1);
                     USER_INTERFACE.updateGrid(GRID.cells());
                     break;
@@ -79,9 +81,10 @@ public class Game {
             String menuPrompt = "Expert Controls?";
             String[] menuOptions = {
                     "Advance 'x' Gen's",
-                    "Toggle Cell",
+                    "Toggle a Cell",
                     "Fill Grid",
-                    "Invert Cells",
+                    "Empty Grid",
+                    "Invert Grid",
                     "Save Seed",
                     "Load Seed",
                     "Return"
@@ -99,16 +102,16 @@ public class Game {
                 }
                 USER_INTERFACE.updateGrid(GRID.cells());
                 break;
-            case 1: // Toggle Cell
+            case 1: // Toggle A Cell
                 {
                     Cell[][] cells = GRID.cells();
                     
                     int width = cells[0].length;
-                    USER_INTERFACE.createInputRangeMenu("Cell X-coord("+1+"-"+width+")", 1, width);
+                    USER_INTERFACE.createInputRangeMenu("Please enter a column no. ("+1+"-"+width+")", 1, width);
                     int x = USER_INTERFACE.numberOfLastSelectedOptionByUser() - 1;
                     
                     int height = cells.length;
-                    USER_INTERFACE.createInputRangeMenu("Cell Y-coord("+1+"-"+height+")", 1, height);
+                    USER_INTERFACE.createInputRangeMenu("Please enter a row no. ("+1+"-"+height+")", 1, height);
                     int y = USER_INTERFACE.numberOfLastSelectedOptionByUser() - 1;
                     
                     cells[y][x] = cells[y][x] == Cell.ALIVE ? Cell.DEAD : Cell.ALIVE;
@@ -116,18 +119,67 @@ public class Game {
                 USER_INTERFACE.updateGrid(GRID.cells());
                 break;
             case 2: // Fill Grid
+                {
+                    Cell[][] cells = GRID.cells();
+                    
+                    for(int row=0;row<cells.length;row++) {
+                        for(int column=0;column<cells[row].length;column++) {
+                            cells[row][column] = Cell.ALIVE;
+                        }
+                    }
+                }
+                USER_INTERFACE.updateGrid(GRID.cells());
                 break;
-            case 3: // Invert Cells
+            case 3: // Empty Grid
+                {
+                    Cell[][] cells = GRID.cells();
+                    
+                    for(int row=0;row<cells.length;row++) {
+                        for(int column=0;column<cells[row].length;column++) {
+                            cells[row][column] = Cell.DEAD;
+                        }
+                    }
+                }
+                USER_INTERFACE.updateGrid(GRID.cells());
                 break;
-            case 4: // Save Seed
+            case 4: // Invert Grid
+                {
+                    Cell[][] cells = GRID.cells();
+                    
+                    for(int row=0;row<cells.length;row++) {
+                        for(int column=0;column<cells[row].length;column++) {
+                            cells[row][column] = cells[row][column] == Cell.ALIVE ? Cell.DEAD : Cell.ALIVE;
+                        }
+                    }
+                }
+                USER_INTERFACE.updateGrid(GRID.cells());
                 break;
-            case 5: // Load Seed
+            case 5: // Save Seed
+                saveCodeMenu();
                 break;
-            case 6: // Return
+            case 6: // Load Seed
+            
+                break;
+            case 7: // Return
                 break;
             default:
                 throw new RuntimeException();
         }
+    }
+
+    private void saveCodeMenu() {
+        {
+            String menuPrompt = 
+                    "Copy this; you can paste it to reload your current grid, \n";
+            for(Cell[] cells: GRID.cells()) {
+                
+            }
+                    
+            String[] menuOptions = {"Return"};
+            USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
+        }
+        
+        return;
     }
     
     private void creditsAndInfoMenu() {
