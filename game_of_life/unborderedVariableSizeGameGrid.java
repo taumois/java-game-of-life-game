@@ -4,7 +4,7 @@ import java.util.Random;
 /**
  * A bordered grid responsible for holding all the cells for a game of Life.
  */
-class unborderedVariableSizeGameGrid implements Grid {
+class UnborderedVariableSizeGameGrid implements Grid {
     private static final byte NEIGHBORS_PER_CELL = 8;
     private static final int[] quantitiesOfNeighborsToAllowSurvival = {2, 3};
     private static final int[] quantitiesOfNeighborsToAllowReproduction = {3};
@@ -22,7 +22,7 @@ class unborderedVariableSizeGameGrid implements Grid {
      * @param width  width to make the grid
      * @param height height to make the grid
      */
-    unborderedVariableSizeGameGrid(int width, int height) {
+    UnborderedVariableSizeGameGrid(int width, int height) {
         this.QUANTITY_OF_COLUMNS = width;
         this.QUANTITY_OF_ROWS = height;
         
@@ -79,7 +79,7 @@ class unborderedVariableSizeGameGrid implements Grid {
      */
     private void pushBuffer() {
         for(int rowIndex = 0;rowIndex<cells.length;rowIndex++) {
-            for(int columnIndex = 0;columnIndex<cells.length;columnIndex++) {
+            for(int columnIndex = 0;columnIndex<cells[rowIndex].length;columnIndex++) {
                 cells[rowIndex][columnIndex] = bufferCells[rowIndex][columnIndex];
             }
         }

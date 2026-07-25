@@ -9,6 +9,6 @@ public class Main {
     
     public static void main() {
         var game = Game.standardGame();
-        game.play();
+        game.run();
     }
 }

@@ -9,17 +9,23 @@ class TerminalUserInterface implements UserInterface {
     private static final char ALIVE_CELL_SYMBOL = 'W';
     private static final char DEAD_CELL_SYMBOL = '`';
     
-    private Scanner scanner = new Scanner(System.in);
+    private Scanner scanner;
     private boolean isDisplayingPrompt;
-    private String promptToDisplay;
+    private String gridToDisplay;
+    private String menuToDisplay;
     private int indexOfLastSelectedOption;
-    private String lastSelectedOption;
+    private String lastSelectedOptionText;
     
     /**
      * Constructor for objects of class UI
      */
     TerminalUserInterface() {
-        scanner.useDelimiter(",|\\n");
+        scanner = new Scanner(System.in);
+        scanner.useDelimiter(",|\\n"); // Regex for a comma/newline delimiter
+        
+        gridToDisplay = "";
+        menuToDisplay = "";
+        lastSelectedOptionText = "";
     }
     
     /**
@@ -28,12 +34,24 @@ class TerminalUserInterface implements UserInterface {
      * @param grid the new grid to replace the displayed with
      */
     public void updateGrid(Cell[][] grid) {
-        char[] gridToDisplay = printableBufferFromGrid(grid);
-        clearTerminal();
-        System.out.print(gridToDisplay);
-        
-        System.out.println("Option #"+(indexOfLastSelectedOption+1)+": "+lastSelectedOption+" was selected. ");
-        // E.g. Option #2: Unwell was selected. 
+        gridToDisplay = charGridFromCellGrid(grid);
+        /*
+         * gridToDisplay E.g.
+         * 
+         */
+        refresh();
+    }
+    
+    private void refresh() {
+        String display = 
+                UNICODE_CLEAR_SCREEN_COMMAND +
+                lastSelectedOptionText + "\n" +
+                "========" + "\n" +
+                gridToDisplay +
+                "========" + "\n" +
+                menuToDisplay;
+
+        System.out.println(display);
     }
     
     /**
@@ -48,16 +66,21 @@ class TerminalUserInterface implements UserInterface {
             menu = menu + "\n"+(n+1)+") - "+options[n];
             // E.g. "1) - Well"
         }
-        clearTerminal();
-        System.out.println(menu);
-        /* E.g. 
+        menuToDisplay = menu;
+        /* 
+         * menuToDisplay E.g. 
          * "How are you?
          * 1) - Well
          * 2) - Unwell"
          */ 
 
+        refresh();
+        
         indexOfLastSelectedOption = intInRangeInput("Please enter a number picked from one of the options", 1, options.length) - 1;
-        lastSelectedOption = options[indexOfLastSelectedOption];
+        
+        lastSelectedOptionText =
+                "Option #"+(indexOfLastSelectedOption+1)+": " +
+                options[indexOfLastSelectedOption]+" was selected. ";
     }
     
     private int intInRangeInput(String inputRequirementsMessage, int lowerBound, int upperBound) {
@@ -111,7 +134,7 @@ class TerminalUserInterface implements UserInterface {
     /**
      * Return a ready to print buffer of a given grid's cell representations
      */
-    private char[] printableBufferFromGrid(Cell[][] grid) {
+    private String charGridFromCellGrid(Cell[][] grid) {
         char[] symbolBuffer = new char[grid.length * (grid[0].length + 1)];
         
         for(int row=0;row<grid.length;row++) {
@@ -126,7 +149,7 @@ class TerminalUserInterface implements UserInterface {
             symbolBuffer[index] = '\n';
         }
         
-        return symbolBuffer;
+        return String.copyValueOf(symbolBuffer);
     }
     
     /**

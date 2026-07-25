@@ -12,17 +12,17 @@ public class Game {
     }
     
     public static Game standardGame() {
-        return new Game(new TerminalUserInterface(), new unborderedVariableSizeGameGrid(25,25));
+        return new Game(new TerminalUserInterface(), new UnborderedVariableSizeGameGrid(16,9));
     }
     
-    public void play() {
+    public void run() {
         mainMenu();
     }
     
     private void mainMenu() {
-        boolean playing = true;
+        boolean running = true;
         
-        while(playing) {
+        while(running) {
             String menuPrompt = "Welcome to Game of Life";
             String[] menuOptions = {"Play Game of Life", "Credits(John Conway)", "Settings", "Exit"};
             USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
@@ -39,7 +39,8 @@ public class Game {
                     settingsMenu();
                     break;
                 case 3:
-                    playing = false;
+                    running = false;
+                    break;
                 default:
                     throw new RuntimeException();
             }
@@ -47,29 +48,32 @@ public class Game {
     }
     
     private void playMenu() {
-        String menuPrompt = "What would you like to do?";
-        String[] menuOptions = {"Advance One Generation", "Expert Controls", "Return"};
-        USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
+        boolean playing = true;
         
-        int option = USER_INTERFACE.indexOflastSelectedOptionByUser();
-        switch(option) {
-            case 0:
-                GRID.stepForwardGenerations(1);
-                USER_INTERFACE.updateGrid(GRID.cells());
-                playMenu();
-                break;
-            case 1:
-                expertMenu();
-                break;
-            case 2:
-                return;
-            default:
-                throw new RuntimeException();
+        while(playing) {
+            String menuPrompt = "What would you like to do?";
+            String[] menuOptions = {"Advance One Generation", "Expert Controls", "Return"};
+            USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
+            
+            int option = USER_INTERFACE.indexOflastSelectedOptionByUser();
+            switch(option) {
+                case 0: // Advance One Generation
+                    GRID.stepForwardGenerations(1);
+                    USER_INTERFACE.updateGrid(GRID.cells());
+                    break;
+                case 1: // Expert Controls
+                    expertMenu();
+                    break;
+                case 2: // Return
+                    return;
+                default:
+                    throw new RuntimeException();
+            }
         }
     }
     
     private void expertMenu() {
-        
+          
     }
     
     private void creditsMenu() {
