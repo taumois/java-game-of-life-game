@@ -85,8 +85,8 @@ public class Game {
                     "Fill Grid",
                     "Empty Grid",
                     "Invert Grid",
-                    "Save Seed",
-                    "Load Seed",
+                    "Get Save Code",
+                    "Load Save",
                     "Return"
             };
             USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
@@ -154,11 +154,11 @@ public class Game {
                 }
                 USER_INTERFACE.updateGrid(GRID.cells());
                 break;
-            case 5: // Save Seed
-                saveCodeMenu();
+            case 5: // Get Save Code
+                getSaveCodeMenu();
                 break;
-            case 6: // Load Seed
-            
+            case 6: // Load Save
+                loadSaveMenu();
                 break;
             case 7: // Return
                 break;
@@ -166,42 +166,71 @@ public class Game {
                 throw new RuntimeException();
         }
     }
-
-    private void saveCodeMenu() {
+    
+    private void loadSaveMenu() {
         {
             String menuPrompt = 
-                    "Copy this; you can paste it to reload your current grid, \n";
-            for(Cell[] cells: GRID.cells()) {
-                
-            }
-                    
-            String[] menuOptions = {"Return"};
+                    "Enter a code from the 'Get Save Code' menu here \n"+
+                    "to load it." +
+                    "\n";
+            String[] menuOptions = {"ENTER SAVE CODE","Return"};
             USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
         }
         
-        return;
+        int option = USER_INTERFACE.numberOfLastSelectedOptionByUser();
+        switch(option) {
+            case 0:
+                USER_INTERFACE.createInputRangeMenu("The save code please", 0, 99999);
+            case 1:
+                break;
+            default:
+                throw new RuntimeException();
+        }
+    }
+
+    private void getSaveCodeMenu() {
+    
+        String menuPrompt = 
+                "You may copy the code below; it can be pasted \n" +
+                "into the 'Load Code' menu somewhere else \n" +
+                "to reload your current grid/save. \n " +
+                "\n" +
+                GRID.cells()[0].length +
+                GRID.cells().length;
+        int counter = 0;
+        Cell previousCell = Cell.ALIVE;
+        for(Cell[] rowOfCells: GRID.cells()) {
+            for(Cell cell: rowOfCells) {
+                if(cell != previousCell || counter == 9) {
+                    menuPrompt += counter;
+                    counter = 0;
+                }
+                previousCell = cell;
+                counter++;
+            }
+        }
+        menuPrompt += "\n";
+                
+        String[] menuOptions = {"Return"};
+        USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
     }
     
     private void creditsAndInfoMenu() {
-        {
-            String menuPrompt = 
-                    "Credits & Info \n" +
-                    "\n" +
-                    "This game, 'Game of Life', is a recreation of \n" +
-                    "the 'cellular automata' created by the famous mathematician 'John Conway'. \n" +
-                    "His game is known by the name of mine, but it is aka, \n" +
-                    "'Conways Game of Life', or even simply as 'Life'. \n" +
-                    "\n" +
-                    "Good info here: https://en.wikipedia.org/wiki/Conway's_Game_of_Life' \n" +
-                    "But very basically Life is a game about watching interesting patterns \n" +
-                    "emerge from its rules about the cells on its grid, \n" +
-                    "so, if in doubt, just do that; I wouldn't overthink it.";
-            
-            String[] menuOptions = {"Return"};
-            USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
-        }
+        String menuPrompt = 
+                "Credits & Info \n" +
+                "\n" +
+                "This game, 'Game of Life', is a recreation of \n" +
+                "the 'cellular automata' created by the famous mathematician 'John Conway'. \n" +
+                "His game is known by the name of mine, but it is aka, \n" +
+                "'Conways Game of Life', or even simply as 'Life'. \n" +
+                "\n" +
+                "Good info here: https://en.wikipedia.org/wiki/Conway's_Game_of_Life' \n" +
+                "But very basically Life is a game about watching interesting patterns \n" +
+                "emerge from its rules about the cells on its grid, \n" +
+                "so, if in doubt, just do that; I wouldn't overthink it.";
         
-        return;
+        String[] menuOptions = {"Return"};
+        USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
     }
     
     private void settingsMenu() {
