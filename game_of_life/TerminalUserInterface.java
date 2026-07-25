@@ -7,7 +7,7 @@ import java.util.Scanner;
 class TerminalUserInterface implements UserInterface {
     private static final char UNICODE_CLEAR_SCREEN_COMMAND = '\u000C';
     private static final char ALIVE_CELL_SYMBOL = 'W';
-    private static final char DEAD_CELL_SYMBOL = '`';
+    private static final char DEAD_CELL_SYMBOL = ' ';
     private static final String DELIMITER_REGEX = "-|\\n";
     
     private Scanner scanner;
