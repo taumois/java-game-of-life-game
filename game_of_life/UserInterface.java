@@ -19,9 +19,14 @@ public interface UserInterface {
     public void createInputMenu(String prompt, String[] options);
     
     /**
-     * Be returned the index of the option the player last chose in a input menu
      * 
-     * @return the index
      */
-    public int indexOflastSelectedOptionByUser();
+    public void createInputRangeMenu(String prompt, int lowerBound, int upperBound);
+    
+    /**
+     * Be returned the number of the option the player last chose in a input menu
+     * 
+     * @return the number
+     */
+    public int numberOfLastSelectedOptionByUser();
 }

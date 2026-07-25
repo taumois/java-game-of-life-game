@@ -13,7 +13,7 @@ class TerminalUserInterface implements UserInterface {
     private boolean isDisplayingPrompt;
     private String gridToDisplay;
     private String menuToDisplay;
-    private int indexOfLastSelectedOption;
+    private int numberOfLastSelectedOption;
     private String lastSelectedOptionText;
     
     /**
@@ -21,7 +21,7 @@ class TerminalUserInterface implements UserInterface {
      */
     TerminalUserInterface() {
         scanner = new Scanner(System.in);
-        scanner.useDelimiter(",|\\n"); // Regex for a comma/newline delimiter
+        scanner.useDelimiter(";|\\n"); // Regex for a period/newline delimiter
         
         gridToDisplay = "";
         menuToDisplay = "";
@@ -76,11 +76,22 @@ class TerminalUserInterface implements UserInterface {
 
         refresh();
         
-        indexOfLastSelectedOption = intInRangeInput("Please enter a number picked from one of the options", 1, options.length) - 1;
+        numberOfLastSelectedOption = intInRangeInput("Please enter a number picked from one of the options", 1, options.length) - 1;
         
         lastSelectedOptionText =
-                "Option #"+(indexOfLastSelectedOption+1)+": " +
-                options[indexOfLastSelectedOption]+" was selected. ";
+                "Option #"+(numberOfLastSelectedOption+1)+": " +
+                options[numberOfLastSelectedOption]+" was selected. ";
+    }
+    
+    /**
+     * 
+     */
+    public void createInputRangeMenu(String prompt, int lowerBound, int upperBound) {
+        menuToDisplay = prompt;
+
+        refresh();
+        
+        numberOfLastSelectedOption = intInRangeInput("Please enter a valid number within the range", lowerBound, upperBound);
     }
     
     private int intInRangeInput(String inputRequirementsMessage, int lowerBound, int upperBound) {
@@ -116,12 +127,12 @@ class TerminalUserInterface implements UserInterface {
     }
     
     /**
-     * Be returned the index of the option the player last chose in a input menu
+     * Be returned the number of the option the player last chose in a input menu
      * 
-     * @return the index
+     * @return the number
      */
-    public int indexOflastSelectedOptionByUser() {
-        return indexOfLastSelectedOption;
+    public int numberOfLastSelectedOptionByUser() {
+        return numberOfLastSelectedOption;
     }
     
     /**
