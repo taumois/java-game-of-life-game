@@ -1,16 +1,14 @@
- 
-
 
 import java.util.Random;
 
 /**
  * A bordered grid responsible for holding all the cells for a game of Life.
  */
-class StandardBorderedVariableSizeGameGrid implements Grid {
+class unborderedVariableSizeGameGrid implements Grid {
     private static final byte NEIGHBORS_PER_CELL = 8;
     private static final int[] quantitiesOfNeighborsToAllowSurvival = {2, 3};
     private static final int[] quantitiesOfNeighborsToAllowReproduction = {3};
-    private static final LifeAutomataRuler cellRuler = new LifeAutomataRuler(quantitiesOfNeighborsToAllowSurvival, quantitiesOfNeighborsToAllowReproduction);
+    private static final CellRuler cellRuler = new CellRuler(quantitiesOfNeighborsToAllowSurvival, quantitiesOfNeighborsToAllowReproduction);
     
     private final int QUANTITY_OF_COLUMNS;
     private final int QUANTITY_OF_ROWS;
@@ -24,7 +22,7 @@ class StandardBorderedVariableSizeGameGrid implements Grid {
      * @param width  width to make the grid
      * @param height height to make the grid
      */
-    StandardBorderedVariableSizeGameGrid(int width, int height) {
+    unborderedVariableSizeGameGrid(int width, int height) {
         this.QUANTITY_OF_COLUMNS = width;
         this.QUANTITY_OF_ROWS = height;
         

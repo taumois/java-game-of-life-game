@@ -1,17 +1,15 @@
  
-
-
 /**
  * Rules what the state of a cell should be.
  */
-public class LifeAutomataRuler {
+public class CellRuler {
     private Cell[] cellShouldSurviveByQuantityOfNeighborsAsIndex = new Cell[9];
     private Cell[] cellShouldBeReproducedByQuantityOfNeighborsAsIndex = new Cell[9];
     
     /**
      * An object of LifeAutomataRuler
      */
-    LifeAutomataRuler(int[] quantitiesOfNeighborsToAllowSurvival, int[] quantitiesOfNeighborsToAllowReproduction) {
+    CellRuler(int[] quantitiesOfNeighborsToAllowSurvival, int[] quantitiesOfNeighborsToAllowReproduction) {
         for(int cellIndex=0;cellIndex<cellShouldSurviveByQuantityOfNeighborsAsIndex.length;cellIndex++) {
             cellShouldSurviveByQuantityOfNeighborsAsIndex[cellIndex] = Cell.DEAD;
             for(int neighborQuantity: quantitiesOfNeighborsToAllowSurvival) {

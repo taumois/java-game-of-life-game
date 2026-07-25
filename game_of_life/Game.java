@@ -1,5 +1,3 @@
- 
-
 
 /**
  * 
@@ -14,7 +12,7 @@ public class Game {
     }
     
     public static Game standardGame() {
-        return new Game(new TerminalUserInterface(), new StandardBorderedVariableSizeGameGrid(25,25));
+        return new Game(new TerminalUserInterface(), new unborderedVariableSizeGameGrid(25,25));
     }
     
     public void play() {
