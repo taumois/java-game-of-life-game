@@ -8,15 +8,19 @@ public class Game {
     private final UserInterface USER_INTERFACE;
     private Grid grid;
     
+    private boolean highConstrastEnabled;
+    private boolean usingBorderedGrid;
     private boolean running;
     
     Game(UserInterface userInterface, Grid grid) {
         this.USER_INTERFACE = userInterface;
         this.grid = grid;
+        this.highConstrastEnabled = false;
+        this.usingBorderedGrid = false;
     }
     
     public static Game standardGame() {
-        return new Game(new TerminalUserInterface(), new UnborderedVariableSizeGameGrid(16,9));
+        return new Game(new TerminalUserInterface(), new UnborderedGrid(16,9));
     }
     
     public void run() {
@@ -202,7 +206,7 @@ public class Game {
                     Scanner codeParser = new Scanner(code);
                     codeParser.useDelimiter("a|\\n");
                     try {
-                        this.grid = new UnborderedVariableSizeGameGrid(codeParser.nextInt(), codeParser.nextInt());
+                        this.grid = new UnborderedGrid(codeParser.nextInt(), codeParser.nextInt());
                         for(int row=0;row<grid.cells().length;row++) {
                             for(int column=0;column<grid.cells()[0].length;column++) {
                                 grid.cells()[row][column] = codeParser.nextInt() == 1 ? Cell.ALIVE : Cell.DEAD;
@@ -261,17 +265,32 @@ public class Game {
     private void settingsMenu() {
         {
             String menuPrompt = "Settings";
-            String[] menuOptions = {"N/A", "N/A","Return"};
+            String[] menuOptions = {"Toggle High Contrast Cells", "Replace Grid W/ Bigger One", "N/A", "Return"};
             USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
         }
         
         int option = USER_INTERFACE.numberOfLastSelectedOptionByUser();
         switch(option) {
-            case 0:
+            case 0: // Toggle High Contrast Cells
+                if(!highConstrastEnabled) {
+                    USER_INTERFACE.useCellSymbols('@','`');
+                } else {
+                    USER_INTERFACE.useCellSymbols('\u23FA','\u25CB');
+                }
+                highConstrastEnabled = !highConstrastEnabled;
+                USER_INTERFACE.updateGrid(grid.cells());
                 break;
-            case 1:
+            case 1: // Replace Grid W/ Bigger One
+                if(!usingBorderedGrid) {
+                    grid = new BorderedGrid();
+                } else {
+                    grid = new UnborderedGrid();
+                }
+                usingBorderedGrid = !usingBorderedGrid;
                 break;
-            case 2: // Return
+            case 2: // N/A
+                break;
+            case 3: // Return
                 break;
             default:
                 throw new RuntimeException();

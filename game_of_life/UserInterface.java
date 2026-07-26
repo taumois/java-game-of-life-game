@@ -34,4 +34,9 @@ public interface UserInterface {
      * @return the number
      */
     public int numberOfLastSelectedOptionByUser();
+    
+    /**
+     * 
+     */
+    public void useCellSymbols(char aliveCellSymbol, char deadCellSymbol);
 }

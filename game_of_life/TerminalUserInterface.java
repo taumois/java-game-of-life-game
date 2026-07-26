@@ -6,10 +6,12 @@ import java.util.Scanner;
  */
 class TerminalUserInterface implements UserInterface {
     private static final char UNICODE_CLEAR_SCREEN_COMMAND = '\u000C';
-    private static final char ALIVE_CELL_SYMBOL = 'W';
-    private static final char DEAD_CELL_SYMBOL = ' ';
+    private static final char DEFAULT_ALIVE_CELL_SYMBOL = '@';
+    private static final char DEFAULT_DEAD_CELL_SYMBOL = '`';
     private static final String DELIMITER_REGEX = "-|\\n";
     
+    private char aliveCellSymbol;
+    private char deadCellSymbol;
     private Scanner scanner;
     private boolean isDisplayingPrompt;
     private String gridToDisplay;
@@ -26,6 +28,8 @@ class TerminalUserInterface implements UserInterface {
         gridToDisplay = "";
         menuToDisplay = "";
         lastSelectedOptionText = "";
+        aliveCellSymbol = DEFAULT_ALIVE_CELL_SYMBOL;
+        deadCellSymbol = DEFAULT_DEAD_CELL_SYMBOL;
     }
     
     /**
@@ -186,9 +190,14 @@ class TerminalUserInterface implements UserInterface {
      */
     private char charRepresentationFromCell(Cell cell) {
         if(cell == Cell.ALIVE) {
-            return ALIVE_CELL_SYMBOL;
+            return aliveCellSymbol;
         } else {
-            return DEAD_CELL_SYMBOL;
+            return deadCellSymbol;
         }
+    }
+    
+    public void useCellSymbols(char aliveCellSymbol, char deadCellSymbol) {
+        this.aliveCellSymbol = aliveCellSymbol;
+        this.deadCellSymbol = deadCellSymbol;
     }
 }

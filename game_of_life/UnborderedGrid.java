@@ -4,10 +4,12 @@ import java.util.Random;
 /**
  * A bordered grid responsible for holding all the cells for a game of Life.
  */
-class UnborderedVariableSizeGameGrid implements Grid {
+class UnborderedGrid implements Grid {
     private static final byte NEIGHBORS_PER_CELL = 8;
     private static final int[] DEFAULT_QUANTITES_OF_NEIGHBORS_TO_ALLOW_SURVIVAL = {2, 3};
     private static final int[] DEFAULT_QUANTITES_OF_NEIGHBORS_TO_ALLOW_REPRODUCTION = {3};
+    private static final int DEFAULT_QUANTITY_OF_COLUMNS = 25;
+    private static final int DEFAULT_QUANTITY_OF_ROWS = 20;
     private final CellRuler CELL_RULER;
     
     private final int QUANTITY_OF_COLUMNS;
@@ -22,7 +24,31 @@ class UnborderedVariableSizeGameGrid implements Grid {
      * @param width  width to make the grid
      * @param height height to make the grid
      */
-    UnborderedVariableSizeGameGrid(int width, int height) {
+    UnborderedGrid() {
+        this.QUANTITY_OF_COLUMNS = DEFAULT_QUANTITY_OF_COLUMNS;
+        this.QUANTITY_OF_ROWS = DEFAULT_QUANTITY_OF_ROWS;
+        
+        CELL_RULER = new CellRuler(
+                DEFAULT_QUANTITES_OF_NEIGHBORS_TO_ALLOW_SURVIVAL, 
+                DEFAULT_QUANTITES_OF_NEIGHBORS_TO_ALLOW_REPRODUCTION);
+        
+        cells = new Cell[QUANTITY_OF_ROWS][QUANTITY_OF_COLUMNS];
+        bufferCells = new Cell[QUANTITY_OF_ROWS][QUANTITY_OF_COLUMNS];
+        for(int row=0;row<bufferCells.length;row++) {
+            for(int column=0;column<bufferCells[row].length;column++) {
+                bufferCells[row][column] = Math.random() > 0.5 ? Cell.DEAD : Cell.ALIVE;
+            }
+        }
+        pushBuffer();
+    }
+    
+    /**
+     * Constructor for objects of class GameGrid
+     * 
+     * @param width  width to make the grid
+     * @param height height to make the grid
+     */
+    UnborderedGrid(int width, int height) {
         this.QUANTITY_OF_COLUMNS = width;
         this.QUANTITY_OF_ROWS = height;
         
@@ -43,7 +69,7 @@ class UnborderedVariableSizeGameGrid implements Grid {
     /**
      * 
      */
-    UnborderedVariableSizeGameGrid(Cell[][] cells, int[] quantitiesOfNeighborsToAllowSurvival, int[] quantitesOfNeighborsToAllowReproduction) {
+    UnborderedGrid(Cell[][] cells, int[] quantitiesOfNeighborsToAllowSurvival, int[] quantitesOfNeighborsToAllowReproduction) {
         this.QUANTITY_OF_COLUMNS = cells[0].length;
         this.QUANTITY_OF_ROWS = cells.length;
         
