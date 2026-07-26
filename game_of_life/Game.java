@@ -22,7 +22,7 @@ public class Game {
     }
     
     public static Game standardGame() {
-        return new Game(new TerminalUserInterface(), new UnborderedGrid(50,40));
+        return new Game(new TerminalUserInterface(), new UnborderedGrid(25,20));
     }
     
     public void run() {
