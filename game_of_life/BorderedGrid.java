@@ -181,7 +181,7 @@ class BorderedGrid implements Grid {
         targetRow = row + rowOffset;
         coordinateIsInvalid = (!hasColumn(targetColumn) || !hasRow(targetRow));
         if(coordinateIsInvalid) {
-            return false;
+            return true;
         }
         
         cell = cells[targetRow][targetColumn];

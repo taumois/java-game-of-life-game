@@ -10,6 +10,7 @@ public class Game {
     
     private boolean highConstrastEnabled;
     private boolean usingBorderedGrid;
+    private boolean usingBigGrid;
     private boolean running;
     
     Game(UserInterface userInterface, Grid grid) {
@@ -17,10 +18,11 @@ public class Game {
         this.grid = grid;
         this.highConstrastEnabled = false;
         this.usingBorderedGrid = false;
+        this.usingBigGrid = false;
     }
     
     public static Game standardGame() {
-        return new Game(new TerminalUserInterface(), new UnborderedGrid(16,9));
+        return new Game(new TerminalUserInterface(), new UnborderedGrid(25,20));
     }
     
     public void run() {
@@ -256,7 +258,12 @@ public class Game {
                 "Good info here: https://en.wikipedia.org/wiki/Conway's_Game_of_Life' \n" +
                 "But very basically Life is a game about watching interesting patterns \n" +
                 "emerge from its rules about the cells on its grid, \n" +
-                "so, if in doubt, just do that; I wouldn't overthink it.";
+                "so, if in doubt, just do that; I wouldn't overthink it. \n" +
+                "\n" +
+                "[Pro tip: You can chain input cmds with dash('-')           ] \n" +
+                "[E.g. instead of just entering '1' to leave this menu,      ] \n" +
+                "[try entering '1-1-1', to leave this menu AND start playing ] \n" +
+                "[AND advance a generation, all in one swift action.         ] \n";
         
         String[] menuOptions = {"Return"};
         USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
@@ -265,7 +272,7 @@ public class Game {
     private void settingsMenu() {
         {
             String menuPrompt = "Settings";
-            String[] menuOptions = {"Toggle High Contrast Cells", "Replace Grid W/ Bigger One", "N/A", "Return"};
+            String[] menuOptions = {"Toggle High Contrast Cells", "Treat External Cells Alive(bordered grid)", "Return"};
             USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
         }
         
@@ -273,14 +280,14 @@ public class Game {
         switch(option) {
             case 0: // Toggle High Contrast Cells
                 if(!highConstrastEnabled) {
-                    USER_INTERFACE.useCellSymbols('@','`');
-                } else {
                     USER_INTERFACE.useCellSymbols('\u23FA','\u25CB');
+                } else {
+                    USER_INTERFACE.useCellSymbols('@','`');
                 }
                 highConstrastEnabled = !highConstrastEnabled;
                 USER_INTERFACE.updateGrid(grid.cells());
                 break;
-            case 1: // Replace Grid W/ Bigger One
+            case 1: // Treat External Cells Alive(bordered grid)
                 if(!usingBorderedGrid) {
                     grid = new BorderedGrid();
                 } else {
@@ -299,7 +306,8 @@ public class Game {
     
     private void exitMenu() {
         {
-            String menuPrompt = "Please confirm that you wish to exit the program?";
+            String menuPrompt = 
+                    "Please confirm that you wish to exit the program? ";
             String[] menuOptions = {"Confirm; Exit Program", "Return"};
             USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
         }
