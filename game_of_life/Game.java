@@ -362,7 +362,7 @@ public class Game {
         switch(option) {
             case 0: // Toggle High Contrast Cells
                 if(!highConstrastEnabled) {
-                    USER_INTERFACE.useCellSymbols('\u23FA','\u25CB');
+                    USER_INTERFACE.useCellSymbols('0','\u25A0');
                 } else {
                     USER_INTERFACE.useCellSymbols('@','`');
                 }
