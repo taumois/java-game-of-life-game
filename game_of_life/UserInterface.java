@@ -38,5 +38,10 @@ public interface UserInterface {
     /**
      * 
      */
-    public void useCellSymbols(char aliveCellSymbol, char deadCellSymbol);
+    public void useHighContrastCellSymbols();
+    
+    /**
+     * 
+     */
+    public void useDefaultCellSymbols();
 }

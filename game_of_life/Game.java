@@ -5,24 +5,25 @@ import java.util.Scanner;
  * 
  */
 public class Game {
-    private final UserInterface USER_INTERFACE;
+    private UserInterface userInterface;
     private Grid grid;
-    
+    private Grid defaultGrid;
+    private UserInterface defaultUserInterface;
     private boolean highConstrastEnabled;
     private boolean usingBorderedGrid;
     private boolean usingBigGrid;
     private boolean running;
     
     Game(UserInterface userInterface, Grid grid) {
-        this.USER_INTERFACE = userInterface;
+        this.userInterface = userInterface;
         this.grid = grid;
+        this.defaultUserInterface = this.userInterface;
+        this.defaultGrid = this.grid;
+        
         this.highConstrastEnabled = false;
         this.usingBorderedGrid = false;
         this.usingBigGrid = false;
-    }
-    
-    public static Game standardGame() {
-        return new Game(new TerminalUserInterface(), new UnborderedGrid(25,20));
+        
     }
     
     public void run() {
@@ -35,9 +36,9 @@ public class Game {
         while(running) {
             String menuPrompt = "Welcome to Game of Life";
             String[] menuOptions = {"Play Game of Life", "Credits(John Conway) & Info", "Settings", "Exit"};
-            USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
+            userInterface.createInputMenu(menuPrompt, menuOptions);
             
-            int option = USER_INTERFACE.numberOfLastSelectedOptionByUser();
+            int option = userInterface.numberOfLastSelectedOptionByUser();
             switch(option) {
                 case 0:
                     playMenu();
@@ -63,13 +64,13 @@ public class Game {
         while(playing) {
             String menuPrompt = "Game of Life";
             String[] menuOptions = {"Next Generation", "Expert Controls", "Return"};
-            USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
+            userInterface.createInputMenu(menuPrompt, menuOptions);
             
-            int option = USER_INTERFACE.numberOfLastSelectedOptionByUser();
+            int option = userInterface.numberOfLastSelectedOptionByUser();
             switch(option) {
                 case 0: // Next Generation
                     grid.stepForwardGenerations(1);
-                    USER_INTERFACE.updateGrid(grid.cells());
+                    userInterface.updateGrid(grid.cells());
                     break;
                 case 1: // Expert Controls
                     expertMenu();
@@ -98,34 +99,34 @@ public class Game {
                     "Load Save",
                     "Return"
             };
-            USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
+            userInterface.createInputMenu(menuPrompt, menuOptions);
         }
         
-        int option = USER_INTERFACE.numberOfLastSelectedOptionByUser();
+        int option = userInterface.numberOfLastSelectedOptionByUser();
         switch(option) {
             case 0: // Advance 'x' Gen's
                 {
-                    USER_INTERFACE.createInputRangeMenu("Enter the number of gens to advance(1-999)", 1, 999);
-                    int x = USER_INTERFACE.numberOfLastSelectedOptionByUser();
+                    userInterface.createInputRangeMenu("Enter the number of gens to advance(1-999)", 1, 999);
+                    int x = userInterface.numberOfLastSelectedOptionByUser();
                     grid.stepForwardGenerations(x);
                 }
-                USER_INTERFACE.updateGrid(grid.cells());
+                userInterface.updateGrid(grid.cells());
                 break;
             case 1: // Toggle a Cell
                 {
                     Cell[][] cells = grid.cells();
                     
                     int width = cells[0].length;
-                    USER_INTERFACE.createInputRangeMenu("Please enter a column no. ("+1+"-"+width+")", 1, width);
-                    int x = USER_INTERFACE.numberOfLastSelectedOptionByUser() - 1;
+                    userInterface.createInputRangeMenu("Please enter a column no. ("+1+"-"+width+")", 1, width);
+                    int x = userInterface.numberOfLastSelectedOptionByUser() - 1;
                     
                     int height = cells.length;
-                    USER_INTERFACE.createInputRangeMenu("Please enter a row no. ("+1+"-"+height+")", 1, height);
-                    int y = USER_INTERFACE.numberOfLastSelectedOptionByUser() - 1;
+                    userInterface.createInputRangeMenu("Please enter a row no. ("+1+"-"+height+")", 1, height);
+                    int y = userInterface.numberOfLastSelectedOptionByUser() - 1;
                     
                     cells[y][x] = cells[y][x] == Cell.ALIVE ? Cell.DEAD : Cell.ALIVE;
                 }
-                USER_INTERFACE.updateGrid(grid.cells());
+                userInterface.updateGrid(grid.cells());
                 break;
             case 2: // Randomise Grid
                 {
@@ -137,7 +138,7 @@ public class Game {
                         }
                     }
                 }
-                USER_INTERFACE.updateGrid(grid.cells());
+                userInterface.updateGrid(grid.cells());
                 break;
             case 3: // Fill Grid
                 {
@@ -149,7 +150,7 @@ public class Game {
                         }
                     }
                 }
-                USER_INTERFACE.updateGrid(grid.cells());
+                userInterface.updateGrid(grid.cells());
                 break;
             case 4: // Empty Grid
                 {
@@ -161,7 +162,7 @@ public class Game {
                         }
                     }
                 }
-                USER_INTERFACE.updateGrid(grid.cells());
+                userInterface.updateGrid(grid.cells());
                 break;
             case 5: // Invert Grid
                 {
@@ -173,7 +174,7 @@ public class Game {
                         }
                     }
                 }
-                USER_INTERFACE.updateGrid(grid.cells());
+                userInterface.updateGrid(grid.cells());
                 break;
             case 6: // Current Save Code
                 currentSaveCodeMenu();
@@ -198,14 +199,14 @@ public class Game {
                     "then keep them safe to load here later." +
                     "\n";
             String[] menuOptions = {"I Have a Code to Use","Return"};
-            USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
+            userInterface.createInputMenu(menuPrompt, menuOptions);
         }
         
-        int option = USER_INTERFACE.numberOfLastSelectedOptionByUser();
+        int option = userInterface.numberOfLastSelectedOptionByUser();
         switch(option) {
             case  0:
                 {
-                    String code = USER_INTERFACE.stringInput(
+                    String code = userInterface.stringInput(
                     "Paste the save code now; \n" +
                     "warning, if the code is invalid, nothing will happen").trim();
                     
@@ -218,7 +219,7 @@ public class Game {
                                 grid.cells()[row][column] = codeParser.nextInt() == 1 ? Cell.ALIVE : Cell.DEAD;
                             }
                         }
-                        USER_INTERFACE.updateGrid(grid.cells());
+                        userInterface.updateGrid(grid.cells());
                     } catch(RuntimeException exception) {}
                 }
             case 1:
@@ -247,7 +248,7 @@ public class Game {
         menuPrompt += "\n";
                 
         String[] menuOptions = {"Return"};
-        USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
+        userInterface.createInputMenu(menuPrompt, menuOptions);
     }
 
     private void curatedSaveCodesMenu() {
@@ -325,7 +326,7 @@ public class Game {
 
                 
         String[] menuOptions = {"Return"};
-        USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
+        userInterface.createInputMenu(menuPrompt, menuOptions);
     }
     
     private void creditsAndInfoMenu() {
@@ -348,32 +349,32 @@ public class Game {
                 "[AND advance a generation, all in one swift action.         ] \n";
         
         String[] menuOptions = {"Return"};
-        USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
+        userInterface.createInputMenu(menuPrompt, menuOptions);
     }
     
     private void settingsMenu() {
         {
             String menuPrompt = "Settings";
-            String[] menuOptions = {"Toggle High Contrast Cells", "Treat External Cells Alive(bordered grid)", "Return"};
-            USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
+            String[] menuOptions = {"Toggle High Contrast Cells", "Treat External Cells Alive(bordered grid)", "N/A", "Return"};
+            userInterface.createInputMenu(menuPrompt, menuOptions);
         }
         
-        int option = USER_INTERFACE.numberOfLastSelectedOptionByUser();
+        int option = userInterface.numberOfLastSelectedOptionByUser();
         switch(option) {
             case 0: // Toggle High Contrast Cells
                 if(!highConstrastEnabled) {
-                    USER_INTERFACE.useCellSymbols('0','\u25A0');
+                    userInterface.useHighContrastCellSymbols();
                 } else {
-                    USER_INTERFACE.useCellSymbols('@','`');
+                    userInterface.useDefaultCellSymbols();
                 }
                 highConstrastEnabled = !highConstrastEnabled;
-                USER_INTERFACE.updateGrid(grid.cells());
+                userInterface.updateGrid(grid.cells());
                 break;
             case 1: // Treat External Cells Alive(bordered grid)
                 if(!usingBorderedGrid) {
                     grid = new BorderedGrid();
                 } else {
-                    grid = new UnborderedGrid();
+                    grid = defaultGrid;
                 }
                 usingBorderedGrid = !usingBorderedGrid;
                 break;
@@ -391,10 +392,10 @@ public class Game {
             String menuPrompt = 
                     "Please confirm if you wish to exit the program? ";
             String[] menuOptions = {"Confirm; Exit Program", "Return"};
-            USER_INTERFACE.createInputMenu(menuPrompt, menuOptions);
+            userInterface.createInputMenu(menuPrompt, menuOptions);
         }
         
-        int option = USER_INTERFACE.numberOfLastSelectedOptionByUser();
+        int option = userInterface.numberOfLastSelectedOptionByUser();
         boolean exitConfirmed;
         switch(option) {
             case 0: // Confirm; Exit Program

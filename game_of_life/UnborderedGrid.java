@@ -88,6 +88,27 @@ class UnborderedGrid implements Grid {
     }
     
     /**
+     * 
+     */
+    UnborderedGrid(int[] quantitiesOfNeighborsToAllowSurvival, int[] quantitesOfNeighborsToAllowReproduction) {
+        this.QUANTITY_OF_COLUMNS = DEFAULT_QUANTITY_OF_COLUMNS;
+        this.QUANTITY_OF_ROWS = DEFAULT_QUANTITY_OF_ROWS;
+        
+        CELL_RULER = new CellRuler(
+                quantitiesOfNeighborsToAllowSurvival, 
+                quantitesOfNeighborsToAllowReproduction);
+        
+        this.cells = new Cell[QUANTITY_OF_ROWS][QUANTITY_OF_COLUMNS];
+        bufferCells = new Cell[QUANTITY_OF_ROWS][QUANTITY_OF_COLUMNS];
+        for(int row=0;row<bufferCells.length;row++) {
+            for(int column=0;column<bufferCells[row].length;column++) {
+                bufferCells[row][column] = cells[row][column];
+            }
+        }
+        pushBuffer();
+    }
+    
+    /**
      * Be returned the 2d array containing all of this grids cells. The 1st dimension is row #; the 2nd dimension is column #.
      * 
      * @return the cells
