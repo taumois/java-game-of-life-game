@@ -102,7 +102,7 @@ class UnborderedGrid implements Grid {
         bufferCells = new Cell[QUANTITY_OF_ROWS][QUANTITY_OF_COLUMNS];
         for(int row=0;row<bufferCells.length;row++) {
             for(int column=0;column<bufferCells[row].length;column++) {
-                bufferCells[row][column] = cells[row][column];
+                bufferCells[row][column] = Math.random() > 0.5 ? Cell.DEAD : Cell.ALIVE;
             }
         }
         pushBuffer();
