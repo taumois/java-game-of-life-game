@@ -6,79 +6,24 @@ import java.util.Random;
  */
 class UnborderedGrid implements Grid {
     private static final byte NEIGHBORS_PER_CELL = 8;
-    private static final int[] DEFAULT_QUANTITES_OF_NEIGHBORS_TO_ALLOW_SURVIVAL = {2, 3};
-    private static final int[] DEFAULT_QUANTITES_OF_NEIGHBORS_TO_ALLOW_REPRODUCTION = {3};
-    private static final int DEFAULT_QUANTITY_OF_COLUMNS = 25;
-    private static final int DEFAULT_QUANTITY_OF_ROWS = 20;
-    private final CellRuler CELL_RULER;
     
+    private CellRuler cellRuler;
     private final int QUANTITY_OF_COLUMNS;
     private final int QUANTITY_OF_ROWS;
     private Cell[][] cells;
     private Cell[][] bufferCells;
     
-    
-    /**
-     * Constructor for objects of class GameGrid
-     * 
-     * @param width  width to make the grid
-     * @param height height to make the grid
-     */
-    UnborderedGrid() {
-        this.QUANTITY_OF_COLUMNS = DEFAULT_QUANTITY_OF_COLUMNS;
-        this.QUANTITY_OF_ROWS = DEFAULT_QUANTITY_OF_ROWS;
-        
-        CELL_RULER = new CellRuler(
-                DEFAULT_QUANTITES_OF_NEIGHBORS_TO_ALLOW_SURVIVAL, 
-                DEFAULT_QUANTITES_OF_NEIGHBORS_TO_ALLOW_REPRODUCTION);
-        
-        cells = new Cell[QUANTITY_OF_ROWS][QUANTITY_OF_COLUMNS];
-        bufferCells = new Cell[QUANTITY_OF_ROWS][QUANTITY_OF_COLUMNS];
-        for(int row=0;row<bufferCells.length;row++) {
-            for(int column=0;column<bufferCells[row].length;column++) {
-                bufferCells[row][column] = Math.random() > 0.5 ? Cell.DEAD : Cell.ALIVE;
-            }
-        }
-        pushBuffer();
-    }
-    
-    /**
-     * Constructor for objects of class GameGrid
-     * 
-     * @param width  width to make the grid
-     * @param height height to make the grid
-     */
-    UnborderedGrid(int width, int height) {
-        this.QUANTITY_OF_COLUMNS = width;
-        this.QUANTITY_OF_ROWS = height;
-        
-        CELL_RULER = new CellRuler(
-                DEFAULT_QUANTITES_OF_NEIGHBORS_TO_ALLOW_SURVIVAL, 
-                DEFAULT_QUANTITES_OF_NEIGHBORS_TO_ALLOW_REPRODUCTION);
-        
-        cells = new Cell[QUANTITY_OF_ROWS][QUANTITY_OF_COLUMNS];
-        bufferCells = new Cell[QUANTITY_OF_ROWS][QUANTITY_OF_COLUMNS];
-        for(int row=0;row<bufferCells.length;row++) {
-            for(int column=0;column<bufferCells[row].length;column++) {
-                bufferCells[row][column] = Math.random() > 0.5 ? Cell.DEAD : Cell.ALIVE;
-            }
-        }
-        pushBuffer();
-    }
-    
     /**
      * 
      */
-    UnborderedGrid(Cell[][] cells, int[] quantitiesOfNeighborsToAllowSurvival, int[] quantitesOfNeighborsToAllowReproduction) {
+    UnborderedGrid(Cell[][] cells, CellRuler cellRuler) {
         this.QUANTITY_OF_COLUMNS = cells[0].length;
         this.QUANTITY_OF_ROWS = cells.length;
         
-        CELL_RULER = new CellRuler(
-                quantitiesOfNeighborsToAllowSurvival, 
-                quantitesOfNeighborsToAllowReproduction);
+        this.cellRuler = cellRuler;
         
         this.cells = new Cell[QUANTITY_OF_ROWS][QUANTITY_OF_COLUMNS];
-        bufferCells = new Cell[QUANTITY_OF_ROWS][QUANTITY_OF_COLUMNS];
+        this.bufferCells = new Cell[QUANTITY_OF_ROWS][QUANTITY_OF_COLUMNS];
         for(int row=0;row<bufferCells.length;row++) {
             for(int column=0;column<bufferCells[row].length;column++) {
                 bufferCells[row][column] = cells[row][column];
@@ -90,15 +35,17 @@ class UnborderedGrid implements Grid {
     /**
      * 
      */
-    UnborderedGrid(int[] quantitiesOfNeighborsToAllowSurvival, int[] quantitesOfNeighborsToAllowReproduction) {
-        this.QUANTITY_OF_COLUMNS = DEFAULT_QUANTITY_OF_COLUMNS;
-        this.QUANTITY_OF_ROWS = DEFAULT_QUANTITY_OF_ROWS;
+    UnborderedGrid(CellRuler cellRuler, int width, int height) {
+        this.QUANTITY_OF_COLUMNS = width;
+        this.QUANTITY_OF_ROWS = height;
         
-        CELL_RULER = new CellRuler(
-                quantitiesOfNeighborsToAllowSurvival, 
-                quantitesOfNeighborsToAllowReproduction);
+        this.cellRuler = cellRuler;
         
-        this.cells = new Cell[QUANTITY_OF_ROWS][QUANTITY_OF_COLUMNS];
+        randomiseCells();
+    }
+    
+    private void randomiseCells() {
+        cells = new Cell[QUANTITY_OF_ROWS][QUANTITY_OF_COLUMNS];
         bufferCells = new Cell[QUANTITY_OF_ROWS][QUANTITY_OF_COLUMNS];
         for(int row=0;row<bufferCells.length;row++) {
             for(int column=0;column<bufferCells[row].length;column++) {
@@ -106,6 +53,10 @@ class UnborderedGrid implements Grid {
             }
         }
         pushBuffer();
+    }
+    
+    public void useCellRuler(CellRuler cellRuler) {
+        this.cellRuler = cellRuler;
     }
     
     /**
@@ -137,7 +88,7 @@ class UnborderedGrid implements Grid {
             for(int column=0;column<QUANTITY_OF_COLUMNS;column++) {
                 Cell cell = cells[row][column];
                 int cellsNumberOfLivingNeighbors = neighborNumberOfCell(column, row);
-                Cell nextStateOfCell = CELL_RULER.rulingFromNeighborsForCell(cell, cellsNumberOfLivingNeighbors);
+                Cell nextStateOfCell = cellRuler.rulingFromNeighborsForCell(cell, cellsNumberOfLivingNeighbors);
                 
                 bufferCells[row][column] = nextStateOfCell;
             }

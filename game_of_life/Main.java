@@ -8,7 +8,7 @@ public class Main {
     }
     
     public static void main() {
-        var game = GameFactory.gameA();
+        Game game = new Game(new TerminalUserInterface(), GridFactory.standard());
         game.run();
     }
 }

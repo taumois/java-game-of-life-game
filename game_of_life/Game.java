@@ -208,12 +208,13 @@ public class Game {
                 {
                     String code = userInterface.stringInput(
                     "Paste the save code now; \n" +
-                    "warning, if the code is invalid, nothing will happen").trim();
+                    "(general)warning, if the code is invalid, nothing will happen; \n" +
+                    "(technical)warning, the loaded grid will be unbordered & use the default ruleset. ").trim();
                     
                     Scanner codeParser = new Scanner(code);
                     codeParser.useDelimiter("a|\\n");
                     try {
-                        this.grid = new UnborderedGrid(codeParser.nextInt(), codeParser.nextInt());
+                        this.grid = new UnborderedGrid(CellRuler.defaultLifeRulesetRuler(), codeParser.nextInt(), codeParser.nextInt());
                         for(int row=0;row<grid.cells().length;row++) {
                             for(int column=0;column<grid.cells()[0].length;column++) {
                                 grid.cells()[row][column] = codeParser.nextInt() == 1 ? Cell.ALIVE : Cell.DEAD;
@@ -354,8 +355,10 @@ public class Game {
     
     private void settingsMenu() {
         {
-            String menuPrompt = "Settings";
-            String[] menuOptions = {"Toggle High Contrast Cells", "Treat External Cells Alive(bordered grid)", "N/A", "Return"};
+            String menuPrompt = 
+                    "Settings \n" +
+                    "Note: switching to use a grid will reset the cells, if you care about them";
+            String[] menuOptions = {"Toggle High Contrast Cells", "Use Standard Grid", "Use Bordered Grid", "Use Huge Grid", "Use Diamoeba Grid", "Return"};
             userInterface.createInputMenu(menuPrompt, menuOptions);
         }
         
@@ -370,17 +373,23 @@ public class Game {
                 highConstrastEnabled = !highConstrastEnabled;
                 userInterface.updateGrid(grid.cells());
                 break;
-            case 1: // Treat External Cells Alive(bordered grid)
-                if(!usingBorderedGrid) {
-                    grid = new BorderedGrid();
-                } else {
-                    grid = defaultGrid;
-                }
-                usingBorderedGrid = !usingBorderedGrid;
+            case 1: // Use Standard Grid
+                grid = GridFactory.standard();
+                userInterface.updateGrid(grid.cells());
                 break;
-            case 2: // N/A
+            case 2: // Use Bordered Grid
+                grid = GridFactory.bordered();
+                userInterface.updateGrid(grid.cells());;
                 break;
-            case 3: // Return
+            case 3: // Use Huge Grid
+                grid = GridFactory.huge();
+                userInterface.updateGrid(grid.cells());
+                break;
+            case 4: // Use Diamoeba
+                grid = GridFactory.diamoeba();
+                userInterface.updateGrid(grid.cells());
+                break;
+            case 5: // Return
                 break;
             default:
                 throw new RuntimeException();

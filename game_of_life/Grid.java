@@ -17,4 +17,6 @@ public interface Grid {
      * @param NumberOfGenerations
      */
     public void stepForwardGenerations(int NumberOfgenerations);
+    
+    public void useCellRuler(CellRuler cellRuler);
 }

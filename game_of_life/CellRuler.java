@@ -9,7 +9,7 @@ public class CellRuler {
     /**
      * An object of LifeAutomataRuler
      */
-    CellRuler(int[] quantitiesOfNeighborsToAllowSurvival, int[] quantitiesOfNeighborsToAllowReproduction) {
+    CellRuler(int[] quantitiesOfNeighborsToAllowReproduction, int[] quantitiesOfNeighborsToAllowSurvival) {
         for(int cellIndex=0;cellIndex<cellShouldSurviveByQuantityOfNeighborsAsIndex.length;cellIndex++) {
             cellShouldSurviveByQuantityOfNeighborsAsIndex[cellIndex] = Cell.DEAD;
             for(int neighborQuantity: quantitiesOfNeighborsToAllowSurvival) {
@@ -27,6 +27,15 @@ public class CellRuler {
                 }
             }
         }
+    }
+    
+    /**
+     * 
+     */
+    static CellRuler defaultLifeRulesetRuler() {
+        int[] R = {3};
+        int[] S = {2, 3};
+        return new CellRuler(R, S);
     }
     
     /**
