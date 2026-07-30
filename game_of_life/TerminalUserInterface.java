@@ -41,10 +41,7 @@ class TerminalUserInterface implements UserInterface {
      */
     public void updateGrid(Cell[][] grid) {
         gridToDisplay = charGridFromCellGrid(grid);
-        /*
-         * gridToDisplay E.g.
-         * 
-         */
+        
         refresh();
     }
     
