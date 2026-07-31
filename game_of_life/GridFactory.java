@@ -6,13 +6,13 @@ public class GridFactory {
     public static Grid standard() {
         int[] B = {3};
         int[] S = {2, 3};
-        return new UnborderedGrid(new CellRuler(B,S), 20, 20);
+        return new UnborderedGrid(new CellRuler(B,S), 25, 20);
     }
     
     public static Grid bordered() {
         int[] B = {3};
         int[] S = {2, 3};
-        return new BorderedGrid(new CellRuler(B,S), 20, 20);
+        return new BorderedGrid(new CellRuler(B,S), 25, 20);
     }
     
     public static Grid huge() {
