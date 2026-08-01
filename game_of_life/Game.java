@@ -2,7 +2,7 @@
 import java.util.Scanner;
 
 /**
- * 
+ * Represents a playable Game of Life in it's entirety
  */
 public class Game {
     private UserInterface userInterface;
@@ -14,24 +14,30 @@ public class Game {
     private boolean usingBigGrid;
     private boolean running;
     
+    /**
+     * Constructor for object of class Game
+     * 
+     * @param userInterface the interface to play the game through
+     * @param grid          the grid to play the game on
+     */
     Game(UserInterface userInterface, Grid grid) {
         this.userInterface = userInterface;
         this.grid = grid;
         this.defaultUserInterface = this.userInterface;
-        this.defaultGrid = this.grid;
-        
-        this.highConstrastEnabled = false;
-        this.usingBorderedGrid = false;
-        this.usingBigGrid = false;
-        
     }
     
+    /**
+     * Start/Run/Play the Game of Life
+     */
     public void run() {
         running = true;
         mainMenu();
         System.exit(0);
     }
     
+    /**
+     * The Main Menu which the user starts on for important functions including exiting and opening settings.
+     */
     private void mainMenu() {
         while(running) {
             String menuPrompt = "Welcome to Game of Life";
@@ -58,6 +64,9 @@ public class Game {
         }
     }
     
+    /**
+     * The grid the user can begin playing the game on. They can advance generations here, and find the experts control menu.
+     */
     private void playMenu() {
         boolean playing = true;
         
@@ -84,6 +93,9 @@ public class Game {
         }
     }
     
+    /**
+     * A menu to let the user select from the 'Expert Controls'. "Invert Grid", "Load Save", etc
+     */
     private void expertMenu() {
         {
             String menuPrompt = "Expert Controls?";
@@ -192,6 +204,9 @@ public class Game {
         }
     }
     
+    /**
+     * A menu for the user to load in a save code
+     */
     private void loadSaveMenu() {
         {
             String menuPrompt = 
@@ -229,7 +244,10 @@ public class Game {
                 throw new RuntimeException();
         }
     }
-
+    
+    /**
+     * A menu for the user to get the save code corrosponding to their current grid of cells
+     */
     private void currentSaveCodeMenu() {
     
         String menuPrompt = 
@@ -252,10 +270,13 @@ public class Game {
         userInterface.createInputMenu(menuPrompt, menuOptions);
     }
 
+    /**
+     * A menu for the user to find some of the save codes I've curated for them to load in later
+     */
     private void curatedSaveCodesMenu() {
     
         String menuPrompt = 
-                "Curated codes; each block can be pasted \n" +
+                "Curated codes to copy; each block can be pasted \n" +
                 "into the 'Load Game' menu to load it in \n" +
                 "\n" +
                 "5a5a0a0a1a0a0a\n" +
@@ -330,6 +351,9 @@ public class Game {
         userInterface.createInputMenu(menuPrompt, menuOptions);
     }
     
+    /**
+     * A menu to both give credit to Conway & offer some info the user may be interested in
+     */
     private void creditsAndInfoMenu() {
         String menuPrompt = 
                 "Credits & Info \n" +
@@ -353,6 +377,9 @@ public class Game {
         userInterface.createInputMenu(menuPrompt, menuOptions);
     }
     
+    /**
+     * A menu for the user to change some settings. Contrast-mode, ruleset, etc
+     */
     private void settingsMenu() {
         {
             String menuPrompt = 
@@ -396,6 +423,9 @@ public class Game {
         }
     }
     
+    /**
+     * A menu to act as a confirmation, preventing the user from leaving accidentally
+     */
     private void exitMenu() {
         {
             String menuPrompt = 

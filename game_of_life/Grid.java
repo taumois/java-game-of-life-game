@@ -1,22 +1,28 @@
  
 /**
- * A grid for a 'Game of Life' that can step forward a through generations, changing the state of its cells which can be either dead or alive.
+ * Represents the grid of cells that Game of Life is played on
  */
 public interface Grid {
     
     /**
-     * The 2d array containing all of the cells. The 1st dimension is row #; the 2nd dimension is column #
+     * Returns a reference to the 2d array used to store this grids cells
+     * The 1st dimension is row #; the 2nd dimension is column #
      * 
      * @return the cells
      */
     public Cell[][] cells();
     
     /**
-     * Steps every cell forwards one generation
+     * Repeatedly step forwards a generation the specified amount of times
      * 
-     * @param NumberOfGenerations
+     * @param NumberOfGenerations the specified amount of times number
      */
     public void stepForwardGenerations(int NumberOfgenerations);
     
+    /**
+     * Replaces the cell cellruler/ruleset which this class uses
+     * 
+     * @see CellRuler
+     */
     public void useCellRuler(CellRuler cellRuler);
 }

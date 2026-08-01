@@ -2,7 +2,11 @@
 import java.util.Scanner;
 
 /**
- * User Interface.
+ * The UserInterface deals with the UI:
+ * Input handling
+ * Displaying info
+ * 
+ * This is an implementation of 'UserInterface' that uses the terminal
  */
 class TerminalUserInterface implements UserInterface {
     private static final char UNICODE_CLEAR_SCREEN_COMMAND = '\u000C';
@@ -22,7 +26,7 @@ class TerminalUserInterface implements UserInterface {
     private String lastSelectedOptionText;
     
     /**
-     * Constructor for objects of class UI
+     * Constructor for objects of class TerminalUserInterface
      */
     TerminalUserInterface() {
         scanner = new Scanner(System.in);
@@ -35,7 +39,7 @@ class TerminalUserInterface implements UserInterface {
     }
     
     /**
-     * Update the grid displayed to the user.
+     * Update the grid displayed to the user
      * 
      * @param grid the new grid to replace the displayed with
      */
@@ -45,6 +49,9 @@ class TerminalUserInterface implements UserInterface {
         refresh();
     }
     
+    /**
+     * Refresh what is displayed to the user in the terminal with the updated info from the other methods
+     */
     private void refresh() {
         String display = 
                 UNICODE_CLEAR_SCREEN_COMMAND +
@@ -58,7 +65,7 @@ class TerminalUserInterface implements UserInterface {
     }
     
     /**
-     * Create and display a menu to display to the user for them to choose from.
+     * Create and display a menu to display to the user for them to choose from
      * 
      * @param prompt a prompt for the menu
      * @param options the array of options for the user to select from after looking at the menu's prompt
@@ -70,13 +77,7 @@ class TerminalUserInterface implements UserInterface {
             // E.g. "1) - Well"
         }
         menuToDisplay = menu;
-        /* 
-         * menuToDisplay E.g. 
-         * "How are you?
-         * 1) - Well
-         * 2) - Unwell"
-         */ 
-
+        
         refresh();
         
         numberOfLastSelectedOption = 
@@ -91,7 +92,12 @@ class TerminalUserInterface implements UserInterface {
     }
     
     /**
+     * Create and display a prompt for the user to get an input in range of two numbers
+     * Range is inclusive for bounding numbers.
      * 
+     * @param prompt a prompt for the menu
+     * @param upperBound a lower bound
+     * @param lowerBound a upper bound
      */
     public void createInputRangeMenu(String prompt, int lowerBound, int upperBound) {
         menuToDisplay = prompt;
@@ -102,7 +108,9 @@ class TerminalUserInterface implements UserInterface {
     }
     
     /**
+     * Create and display a menu to display to the user for them to choose from
      * 
+     * @param prompt a prompt for the menu
      */
     public String stringInput(String prompt) {
         menuToDisplay = prompt;
@@ -112,6 +120,15 @@ class TerminalUserInterface implements UserInterface {
         return safeInput();
     }
     
+    /**
+     * Returns an integer within a specified range
+     * range is inclusive of its specified bounds
+     * 
+     * @param  inputRequirementsMessage a message/prompt informing the user they need to input a number(should also inform them of the range)
+     * @param  lowerBound               the maximum value of the range
+     * @param  upperBound               the minimum value of the range
+     * @return                          the number the user enters after
+     */
     private int intInRangeInput(String inputRequirementsMessage, int lowerBound, int upperBound) {
         assert(upperBound >= lowerBound);
         int intInRange;
@@ -123,6 +140,12 @@ class TerminalUserInterface implements UserInterface {
         return intInRange;
     }
     
+    /**
+     * A safe(i.e. doesn't break or return an error) alternative to 'Scanner.nextInt()'
+     * 
+     * @param  inputRequirementsMessage a message informing the user both they need to input & that input needs to be an int
+     * @return                          the int input recieved from the user
+     */
     private int intInput(String inputRequirementsMessage) {
         while(!scanner.hasNextInt()) {
             System.out.println(inputRequirementsMessage);
@@ -131,6 +154,9 @@ class TerminalUserInterface implements UserInterface {
         return scanner.nextInt();
     }
     
+    /**
+     * Made as an alternative to 'Scanner.next()', that's identical, except, it doesn't break from "Ctrl+Z" in the terminal
+     */
     private String safeInput() {
         String input = null;
         while(input == null) {
@@ -162,6 +188,8 @@ class TerminalUserInterface implements UserInterface {
     
     /**
      * Return a ready to print buffer of a given grid's cell representations
+     * 
+     * @param the grid to get the cells from
      */
     private String charGridFromCellGrid(Cell[][] grid) {
         char[] symbolBuffer = new char[grid.length * (grid[0].length + 1)];
@@ -195,11 +223,17 @@ class TerminalUserInterface implements UserInterface {
         }
     }
     
+    /**
+     * Switch to default grid display mode
+     */
     public void useDefaultCellSymbols() {
         this.aliveCellSymbol = DEFAULT_ALIVE_CELL_SYMBOL;
         this.deadCellSymbol = DEFAULT_DEAD_CELL_SYMBOL;
     }
     
+    /**
+     * Switch to high contrast grid display mode
+     */
     public void useHighContrastCellSymbols() {
         this.aliveCellSymbol = HIGH_CONTRAST_ALIVE_CELL_SYMBOL;
         this.deadCellSymbol = HIGH_CONTRAST_DEAD_CELL_SYMBOL;
