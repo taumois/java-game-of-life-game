@@ -246,17 +246,26 @@ public class Game {
         switch(option) {
             case  0:
                 {
+                    /*
+                     * Below is the code responsible for interpreting and loading codes
+                     */
                     String code = userInterface.stringInput(
                             "Paste the save code now; \n" +
                             "\n" +
                             "Note A - the loaded grid will be unbordered & use the default ruleset. \n" +
                             "Note B - if your code is invalid/corrupted/broken, nothing will actually happen. \n" +
-                            "Note C - The loading process may take 5-50 seconds, depending on device's specs. \n").trim();
+                            "Note C - The loading process may take 5-45 seconds, depending on device's specs and code length. \n").trim();
                     
                     Scanner codeParser = new Scanner(code);
                     codeParser.useDelimiter("a|\\n");
                     try {
-                        this.grid = new UnborderedGrid(CellRuler.defaultLifeRulesetRuler(), codeParser.nextInt(), codeParser.nextInt());
+                        int columns = codeParser.nextInt();
+                        int rows = codeParser.nextInt();
+                        if(columns * rows != codeParser.tokens().count() - 2) {
+                            throw new RuntimeException();
+                        }
+                        System.exit(1);
+                        this.grid = new UnborderedGrid(CellRuler.defaultLifeRulesetRuler(), columns, rows);
                         for(int row=0;row<grid.cells().length;row++) {
                             for(int column=0;column<grid.cells()[0].length;column++) {
                                 grid.cells()[row][column] = codeParser.nextInt() == 1 ? Cell.ALIVE : Cell.DEAD;
