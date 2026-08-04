@@ -245,9 +245,11 @@ public class Game {
             case  0:
                 {
                     String code = userInterface.stringInput(
-                    "Paste the save code now; \n" +
-                    "(general)warning, if the code is invalid, nothing will happen; \n" +
-                    "(technical)warning, the loaded grid will be unbordered & use the default ruleset. ").trim();
+                            "Paste the save code now; \n" +
+                            "\n" +
+                            "Note A - the loaded grid will be unbordered & use the default ruleset. \n" +
+                            "Note B - if your code is invalid/corrupted/broken, nothing will actually happen. \n" +
+                            "Note C - The loading process may take 5-50 seconds, depending on device's specs. \n").trim();
                     
                     Scanner codeParser = new Scanner(code);
                     codeParser.useDelimiter("a|\\n");
