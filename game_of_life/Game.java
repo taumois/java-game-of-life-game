@@ -188,6 +188,7 @@ public class Game {
                 break;
             case 6: // Saving & Loading
                 savingLoadingMenu();
+                break;
             default:
                 throw new RuntimeException();
         }
