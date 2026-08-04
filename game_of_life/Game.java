@@ -106,9 +106,7 @@ public class Game {
                     "Fill Grid",
                     "Empty Grid",
                     "Invert Grid",
-                    "Current Save Code",
-                    "Curated Save Codes",
-                    "Load Save",
+                    "Saving & Loading",
                     "Return"
             };
             userInterface.createInputMenu(menuPrompt, menuOptions);
@@ -188,16 +186,40 @@ public class Game {
                 }
                 userInterface.updateGrid(grid.cells());
                 break;
-            case 6: // Current Save Code
+            case 6: // Saving & Loading
+                savingLoadingMenu();
+            default:
+                throw new RuntimeException();
+        }
+    }
+    
+    /**
+     * A menu to let the user select from the 'Expert Controls'. "Invert Grid", "Load Save", etc
+     */
+    private void savingLoadingMenu() {
+        {
+            String menuPrompt = "Saving & Loading Menu";
+            String[] menuOptions = {
+                    "Current Save Code",
+                    "Curated Save Codes",
+                    "Load Save",
+                    "Return"
+            };
+            userInterface.createInputMenu(menuPrompt, menuOptions);
+        }
+        
+        int option = userInterface.numberOfLastSelectedOptionByUser();
+        switch(option) {
+            case 0: // Current Save Code
                 currentSaveCodeMenu();
                 break;
-            case 7: // Currated Save Codes
+            case 1: // Currated Save Codes
                 curatedSaveCodesMenu();
                 break;
-            case 8: // Load Save
+            case 2: // Load Save
                 loadSaveMenu();
                 break;
-            case 9: // Return
+            case 3: // Return
                 break;
             default:
                 throw new RuntimeException();
@@ -385,7 +407,15 @@ public class Game {
             String menuPrompt = 
                     "Settings \n" +
                     "Note: switching to use a grid will reset the cells, if you care about them";
-            String[] menuOptions = {"Toggle High Contrast Cells", "Use Standard Grid", "Use Bordered Grid", "Use Huge Grid", "Use Diamoeba Grid", "Return"};
+            String[] menuOptions = {
+                    "Toggle High Contrast Cells",
+                    "Use Standard Grid",
+                    "Use Bordered Grid",
+                    "Use Huge Grid", 
+                    "Use Special Grid: Diamoeba", 
+                    "Use Special Grid: Coral",
+                    "Return"
+                    };
             userInterface.createInputMenu(menuPrompt, menuOptions);
         }
         
@@ -412,11 +442,15 @@ public class Game {
                 grid = GridFactory.huge();
                 userInterface.updateGrid(grid.cells());
                 break;
-            case 4: // Use Diamoeba
+            case 4: // Use Special Grid: Diamoeba
                 grid = GridFactory.diamoeba();
                 userInterface.updateGrid(grid.cells());
                 break;
-            case 5: // Return
+            case 5: // Use Special Grid: Coral
+                grid = GridFactory.coral();
+                userInterface.updateGrid(grid.cells());
+                break;
+            case 6: // Return
                 break;
             default:
                 throw new RuntimeException();
