@@ -12,8 +12,8 @@ class TerminalUserInterface implements UserInterface {
     private static final char UNICODE_CLEAR_SCREEN_COMMAND = '\u000C';
     private static final char DEFAULT_ALIVE_CELL_SYMBOL = '@';
     private static final char DEFAULT_DEAD_CELL_SYMBOL = '`';
-    private static final char HIGH_CONTRAST_ALIVE_CELL_SYMBOL = 'O';
-    private static final char HIGH_CONTRAST_DEAD_CELL_SYMBOL = '\u25A0';
+    private static final char HIGH_CONTRAST_ALIVE_CELL_SYMBOL = '\u25AE';
+    private static final char HIGH_CONTRAST_DEAD_CELL_SYMBOL = ' ';
     private static final String DELIMITER_REGEX = "-|\\n";
     
     private char aliveCellSymbol;

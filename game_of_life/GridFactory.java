@@ -13,7 +13,7 @@ public class GridFactory {
     public static Grid standard() {
         int[] B = {3};
         int[] S = {2, 3};
-        return new UnborderedGrid(new CellRuler(B,S), 25, 20);
+        return new UnborderedGrid(new CellRuler(B,S), 25+50, 20);
     }
 
     /**
@@ -31,7 +31,7 @@ public class GridFactory {
     public static Grid huge() {
         int[] B = {3};
         int[] S = {2, 3};
-        return new UnborderedGrid(new CellRuler(B,S), 50, 30);
+        return new UnborderedGrid(new CellRuler(B,S), 50+50, 30);
     }
     
     /**
