@@ -13,7 +13,7 @@ public class GridFactory {
     public static Grid standard() {
         int[] B = {3};
         int[] S = {2, 3};
-        return new UnborderedGrid(new CellRuler(B,S), 25+50, 20);
+        return new UnborderedGrid(new CellRuler(B,S), 75, 20);
     }
 
     /**
@@ -22,7 +22,7 @@ public class GridFactory {
     public static Grid bordered() {
         int[] B = {3};
         int[] S = {2, 3};
-        return new BorderedGrid(new CellRuler(B,S), 25, 20);
+        return new BorderedGrid(new CellRuler(B,S), 75, 20);
     }
     
     /**
@@ -31,7 +31,7 @@ public class GridFactory {
     public static Grid huge() {
         int[] B = {3};
         int[] S = {2, 3};
-        return new UnborderedGrid(new CellRuler(B,S), 50+50, 30);
+        return new UnborderedGrid(new CellRuler(B,S), 100, 30);
     }
     
     /**
@@ -40,6 +40,24 @@ public class GridFactory {
     public static Grid diamoeba() {
         int[] B = {3,5,6,7,8};
         int[] S = {5,6,7,8};
-        return new UnborderedGrid(new CellRuler(B,S), 20, 20);
+        return new UnborderedGrid(new CellRuler(B,S), 75, 20);
+    }
+    
+    /**
+     * Returns the maze grid which is currently 20x20 & unbordered & following the a the special 'maze' rulestring
+     */
+    public static Grid maze() {
+        int[] B = {3};
+        int[] S = {1,2, 3, 4, 5};
+        return new UnborderedGrid(new CellRuler(B,S), 75, 20);
+    }
+    
+    /**
+     * Returns the coral grid which is currently 20x20 & unbordered & following the a the special 'coral' rulestring
+     */
+    public static Grid coral() {
+        int[] B = {3};
+        int[] S = {3,4 ,5, 6, 7, 8};
+        return new UnborderedGrid(new CellRuler(B,S), 75, 20);
     }
 }

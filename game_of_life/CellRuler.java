@@ -43,9 +43,9 @@ public class CellRuler {
      * @return the object
      */
     static CellRuler defaultLifeRulesetRuler() {
-        int[] R = {3};
+        int[] B = {3};
         int[] S = {2, 3};
-        return new CellRuler(R, S);
+        return new CellRuler(B, S);
     }
     
     /**
