@@ -259,19 +259,19 @@ public class Game {
                     Scanner codeParser = new Scanner(code);
                     codeParser.useDelimiter("a|\\n");
                     try {
-                        int columns = codeParser.nextInt();
                         int rows = codeParser.nextInt();
-                        System.out.println(codeParser.tokens().count());
-                        System.out.println(columns*rows);
-                        System.exit(1);
-                        if(columns * rows != codeParser.tokens().count()) {
+                        int columns = codeParser.nextInt();
+                        int expectedNumberOfCellsInCode = columns * rows;
+                        
+                        long actualNumberOfCellsInCode = (code.length() - Integer.toString(rows).length() - Integer.toString(columns).length() - 2) / 2;
+                        if(expectedNumberOfCellsInCode != actualNumberOfCellsInCode) {
                             throw new RuntimeException();
                         }
-                        System.exit(1);
+                        
                         this.grid = new UnborderedGrid(CellRuler.defaultLifeRulesetRuler(), columns, rows);
-                        for(int row=0;row<grid.cells().length;row++) {
-                            for(int column=0;column<grid.cells()[0].length;column++) {
-                                grid.cells()[row][column] = codeParser.nextInt() == 1 ? Cell.ALIVE : Cell.DEAD;
+                        for(int row=0;row<grid.cells()[0].length;row++) {
+                            for(int column=0;column<grid.cells().length;column++) {
+                                grid.cells()[column][row] = codeParser.nextInt() == 1 ? Cell.ALIVE : Cell.DEAD;
                             }
                         }
                         userInterface.updateGrid(grid.cells());
