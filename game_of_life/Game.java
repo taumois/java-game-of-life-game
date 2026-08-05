@@ -261,7 +261,10 @@ public class Game {
                     try {
                         int columns = codeParser.nextInt();
                         int rows = codeParser.nextInt();
-                        if(columns * rows != codeParser.tokens().count() - 2) {
+                        System.out.println(codeParser.tokens().count());
+                        System.out.println(columns*rows);
+                        System.exit(1);
+                        if(columns * rows != codeParser.tokens().count()) {
                             throw new RuntimeException();
                         }
                         System.exit(1);
@@ -315,7 +318,7 @@ public class Game {
                 "Curated codes to copy; each block can be pasted \n" +
                 "into the 'Load Game' menu to load it in \n" +
                 "\n" +
-                "5a5a0a0a1a0a0a\n" +
+                "3a5a0a0a1a0a0a\n" +
                 "0a1a1a1a0a\n" +
                 "0a0a1a0a0a\n" +
                 "\n" +
