@@ -9,9 +9,6 @@ public class Game {
     private Grid grid;
     private Grid defaultGrid;
     private UserInterface defaultUserInterface;
-    private boolean highConstrastEnabled;
-    private boolean usingBorderedGrid;
-    private boolean usingBigGrid;
     private boolean running;
     
     /**
@@ -402,6 +399,9 @@ public class Game {
                 "His game is known by the name of mine, but it is aka, \n" +
                 "'Conways Game of Life', or even simply as 'Life'. \n" +
                 "\n" +
+                "It may be helpful know that Conways Game of Life is not related to \n" +
+                "Game of Life(1860) the board game in any way. " +
+                "\n" +
                 "Good info here: https://en.wikipedia.org/wiki/Conway's_Game_of_Life' \n" +
                 "But very basically Life is a game about watching interesting patterns \n" +
                 "emerge from its rules about the cells on its grid, \n" +
@@ -425,7 +425,11 @@ public class Game {
                     "Settings \n" +
                     "Note: switching to use a grid will reset the cells, if you care about them";
             String[] menuOptions = {
-                    "Toggle High Contrast Cells",
+                    
+                    "Use High Contrast Display",
+                    "Use Punch Card Display",
+                    "Use Default Display" +
+                            "\n",
                     "Use Standard Grid",
                     "Use Bordered Grid",
                     "Use Huge Grid", 
@@ -438,40 +442,43 @@ public class Game {
         
         int option = userInterface.numberOfLastSelectedOptionByUser();
         switch(option) {
-            case 0: // Toggle High Contrast Cells
-                if(!highConstrastEnabled) {
-                    userInterface.useHighContrastCellSymbols();
-                } else {
-                    userInterface.useDefaultCellSymbols();
-                }
-                highConstrastEnabled = !highConstrastEnabled;
+            case 0: // Use High Contrast Display
+                userInterface.useHighContrastCellSymbols();
                 userInterface.updateGrid(grid.cells());
                 break;
-            case 1: // Use Standard Grid
+            case 1: // Use Punch Card Display
+                userInterface.usePunchCardCellSymbols();
+                userInterface.updateGrid(grid.cells());
+                break;
+            case 2: // Use Default Display
+                userInterface.useDefaultCellSymbols();
+                userInterface.updateGrid(grid.cells());
+                break;
+            case 3: // Use Standard Grid
                 grid = GridFactory.standard();
                 userInterface.updateGrid(grid.cells());
                 break;
-            case 2: // Use Bordered Grid
+            case 4: // Use Bordered Grid
                 grid = GridFactory.bordered();
                 userInterface.updateGrid(grid.cells());;
                 break;
-            case 3: // Use Huge Grid
+            case 5: // Use Huge Grid
                 grid = GridFactory.huge();
                 userInterface.updateGrid(grid.cells());
                 break;
-            case 4: // Use Special Grid: Diamoeba
+            case 6: // Use Special Grid: Diamoeba
                 grid = GridFactory.diamoeba();
                 userInterface.updateGrid(grid.cells());
                 break;
-            case 5: // Use Special Grid: Coral
+            case 7: // Use Special Grid: Coral
                 grid = GridFactory.coral();
                 userInterface.updateGrid(grid.cells());
                 break;
-            case 6: // Return
+            case 8: // Return
                 break;
             default:
                 throw new RuntimeException();
-        }
+            }
     }
     
     /**
