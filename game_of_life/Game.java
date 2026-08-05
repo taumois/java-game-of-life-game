@@ -432,7 +432,7 @@ public class Game {
                             "\n",
                     "Use Standard Grid",
                     "Use Bordered Grid",
-                    "Use Huge Grid", 
+                    "Use Mini Grid", 
                     "Use Special Grid: Diamoeba", 
                     "Use Special Grid: Coral",
                     "Return"
@@ -462,8 +462,8 @@ public class Game {
                 grid = GridFactory.bordered();
                 userInterface.updateGrid(grid.cells());;
                 break;
-            case 5: // Use Huge Grid
-                grid = GridFactory.huge();
+            case 5: // Use Mini Grid
+                grid = GridFactory.mini();
                 userInterface.updateGrid(grid.cells());
                 break;
             case 6: // Use Special Grid: Diamoeba
