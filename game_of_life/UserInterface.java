@@ -50,11 +50,6 @@ public interface UserInterface {
     public void useHighContrastCellSymbols();
     
     /**
-     * Switch to high contrast grid display mode
-     */
-    public void usePunchCardCellSymbols();
-    
-    /**
      * Switch to default grid display mode
      */
     public void useDefaultCellSymbols();

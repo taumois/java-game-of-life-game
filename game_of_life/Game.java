@@ -427,7 +427,6 @@ public class Game {
             String[] menuOptions = {
                     
                     "Use High Contrast Display",
-                    "Use Punch Card Display",
                     "Use Default Display" +
                             "\n",
                     "Use Standard Grid",
@@ -446,35 +445,31 @@ public class Game {
                 userInterface.useHighContrastCellSymbols();
                 userInterface.updateGrid(grid.cells());
                 break;
-            case 1: // Use Punch Card Display
-                userInterface.usePunchCardCellSymbols();
-                userInterface.updateGrid(grid.cells());
-                break;
-            case 2: // Use Default Display
+            case 1: // Use Default Display
                 userInterface.useDefaultCellSymbols();
                 userInterface.updateGrid(grid.cells());
                 break;
-            case 3: // Use Standard Grid
+            case 2: // Use Standard Grid
                 grid = GridFactory.standard();
                 userInterface.updateGrid(grid.cells());
                 break;
-            case 4: // Use Bordered Grid
+            case 3: // Use Bordered Grid
                 grid = GridFactory.bordered();
                 userInterface.updateGrid(grid.cells());;
                 break;
-            case 5: // Use Mini Grid
+            case 4: // Use Mini Grid
                 grid = GridFactory.mini();
                 userInterface.updateGrid(grid.cells());
                 break;
-            case 6: // Use Special Grid: Diamoeba
+            case 5: // Use Special Grid: Diamoeba
                 grid = GridFactory.diamoeba();
                 userInterface.updateGrid(grid.cells());
                 break;
-            case 7: // Use Special Grid: Coral
+            case 6: // Use Special Grid: Coral
                 grid = GridFactory.coral();
                 userInterface.updateGrid(grid.cells());
                 break;
-            case 8: // Return
+            case 7: // Return
                 break;
             default:
                 throw new RuntimeException();

@@ -10,12 +10,10 @@ import java.util.Scanner;
  */
 class TerminalUserInterface implements UserInterface {
     private static final char UNICODE_CLEAR_SCREEN_COMMAND = '\u000C';
-    private static final char DEFAULT_ALIVE_CELL_SYMBOL = ' ';
-    private static final char DEFAULT_DEAD_CELL_SYMBOL = '#';
-    private static final char HIGH_CONTRAST_ALIVE_CELL_SYMBOL = '@';
-    private static final char HIGH_CONTRAST_DEAD_CELL_SYMBOL = '`';
-    private static final char PUNCH_CARD_CONTRAST_ALIVE_CELL_SYMBOL = '\u25AE';
-    private static final char PUNCH_CARD_CONTRAST_CELL_SYMBOL = ' ';
+    private static final char DEFAULT_ALIVE_CELL_SYMBOL = '@';
+    private static final char DEFAULT_DEAD_CELL_SYMBOL = '`';
+    private static final char HIGH_CONTRAST_ALIVE_CELL_SYMBOL = '\u2588';
+    private static final char HIGH_CONTRAST_DEAD_CELL_SYMBOL = ' ';
     private static final String DELIMITER_REGEX = "-|\\n";
     
     private char aliveCellSymbol;
@@ -239,13 +237,5 @@ class TerminalUserInterface implements UserInterface {
     public void useHighContrastCellSymbols() {
         this.aliveCellSymbol = HIGH_CONTRAST_ALIVE_CELL_SYMBOL;
         this.deadCellSymbol = HIGH_CONTRAST_DEAD_CELL_SYMBOL;
-    }
-    
-    /**
-     * Switch to high contrast grid display mode
-     */
-    public void usePunchCardCellSymbols() {
-        this.aliveCellSymbol = PUNCH_CARD_CONTRAST_ALIVE_CELL_SYMBOL;
-        this.deadCellSymbol = PUNCH_CARD_CONTRAST_CELL_SYMBOL;
     }
 }
