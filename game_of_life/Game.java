@@ -99,10 +99,10 @@ public class Game {
             String[] menuOptions = {
                     "Advance 'x' Gen's",
                     "Toggle a Cell",
+                    "Invert Grid",
                     "Randomise Grid",
                     "Fill Grid",
                     "Empty Grid",
-                    "Invert Grid",
                     "Saving & Loading",
                     "Return"
             };
@@ -135,7 +135,19 @@ public class Game {
                 }
                 userInterface.updateGrid(grid.cells());
                 break;
-            case 2: // Randomise Grid
+            case 2: // Invert Grid
+                {
+                    Cell[][] cells = grid.cells();
+                    
+                    for(int row=0;row<cells.length;row++) {
+                        for(int column=0;column<cells[row].length;column++) {
+                            cells[row][column] = cells[row][column] == Cell.ALIVE ? Cell.DEAD : Cell.ALIVE;
+                        }
+                    }
+                }
+                userInterface.updateGrid(grid.cells());
+                break;
+            case 3: // Randomise Grid
                 {
                     Cell[][] cells = grid.cells();
                     
@@ -147,7 +159,7 @@ public class Game {
                 }
                 userInterface.updateGrid(grid.cells());
                 break;
-            case 3: // Fill Grid
+            case 4: // Fill Grid
                 {
                     Cell[][] cells = grid.cells();
                     
@@ -159,25 +171,13 @@ public class Game {
                 }
                 userInterface.updateGrid(grid.cells());
                 break;
-            case 4: // Empty Grid
+            case 5: // Empty Grid
                 {
                     Cell[][] cells = grid.cells();
                     
                     for(int row=0;row<cells.length;row++) {
                         for(int column=0;column<cells[row].length;column++) {
                             cells[row][column] = Cell.DEAD;
-                        }
-                    }
-                }
-                userInterface.updateGrid(grid.cells());
-                break;
-            case 5: // Invert Grid
-                {
-                    Cell[][] cells = grid.cells();
-                    
-                    for(int row=0;row<cells.length;row++) {
-                        for(int column=0;column<cells[row].length;column++) {
-                            cells[row][column] = cells[row][column] == Cell.ALIVE ? Cell.DEAD : Cell.ALIVE;
                         }
                     }
                 }
@@ -433,7 +433,7 @@ public class Game {
                     "Use Standard Grid",
                     "Use Bordered Grid",
                     "Use Mini Grid", 
-                    "Use Special Grid: Diamoeba", 
+                    "Use Special Grid: Diamoeba (my fav)", 
                     "Use Special Grid: Coral",
                     "Return"
                     };
